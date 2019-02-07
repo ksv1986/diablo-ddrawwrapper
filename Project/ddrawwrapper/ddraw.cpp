@@ -4,7 +4,6 @@
 #include "resource.h"
 #include <detours.h>
 #include <stdio.h>
-#include <math.h>
 
 // Main thread ddrawwrapper object
 IDirectDrawWrapper *lpDD = NULL;
@@ -39,26 +38,18 @@ void debugMessage(int level, const char *location, const char *message)
 
  // Calculate HMS
 	DWORD cur_time = GetTickCount() - start_time;
-	long hours = (long)floor((double)cur_time / (double)3600000.0);
-	cur_time -= (hours * 3600000);
-	int minutes = (int)floor((double)cur_time / (double)60000.0);
-	cur_time -= (minutes * 60000);
-	double seconds = (double)cur_time / (double)1000.0;
+	const DWORD hours = cur_time / 3600000;
+	cur_time -= hours * 3600000;
+	const DWORD minutes = cur_time / 60000;
+	cur_time -= minutes * 60000;
+	const float seconds = cur_time / 1000.0;
 
  // Build error message
-	char text[4096] = "\0";
-	if(level == 0)
-	{
-		sprintf_s(text, 4096, "%d:%d:%#.1f ERR %s %s\n", hours, minutes, seconds, location, message);
-	}
-	else if(level == 1)
-	{
-		sprintf_s(text, 4096, "%d:%d:%#.1f WRN %s %s\n", hours, minutes, seconds, location, message);
-	}
-	else if(level == 2)
-	{
-		sprintf_s(text, 4096, "%d:%d:%#.1f INF %s %s\n", hours, minutes, seconds, location, message);
-	}
+	char text[4096] = "";
+	const char levels[3][4] = { "ERR", "WRN", "INF" };
+	if (level > 2)
+		level = 2;
+	sprintf_s(text, sizeof(text), "%02d:%02d:%2.1f %s %s %s\n", hours, minutes, seconds, levels[level], location, message);
  // Output and flush
 	printf_s(text);
 	fflush(stdout);
