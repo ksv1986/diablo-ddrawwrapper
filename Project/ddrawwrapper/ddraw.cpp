@@ -2,7 +2,7 @@
 
 #include "DirectDrawWrapper.h"
 #include "resource.h"
-#include "detours.h"
+#include <detours.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -28,16 +28,16 @@ HMODULE hMod;
 
 /* Helper function for throwing debug/error messages
  *
- * int level      - Debug level
+ * int level   - Debug level
  * char *location - Message location
  * char *message  - Message
  */
-void debugMessage(int level, char *location, char *message)
+void debugMessage(int level, const char *location, const char *message)
 {
 	// If above the current level then skip totally
 	if(level > debugLevel) return;
 
-    // Calculate HMS
+ // Calculate HMS
 	DWORD cur_time = GetTickCount() - start_time;
 	long hours = (long)floor((double)cur_time / (double)3600000.0);
 	cur_time -= (hours * 3600000);
@@ -45,7 +45,7 @@ void debugMessage(int level, char *location, char *message)
 	cur_time -= (minutes * 60000);
 	double seconds = (double)cur_time / (double)1000.0;
 
-    // Build error message
+ // Build error message
 	char text[4096] = "\0";
 	if(level == 0)
 	{
@@ -59,7 +59,7 @@ void debugMessage(int level, char *location, char *message)
 	{
 		sprintf_s(text, 4096, "%d:%d:%#.1f INF %s %s\n", hours, minutes, seconds, location, message);
 	}
-    // Output and flush
+ // Output and flush
 	printf_s(text);
 	fflush(stdout);
 }
@@ -92,11 +92,11 @@ BOOL WINAPI OverrideSetCursorPos(int X, int Y)
 }*/
 
 // Pretty standard winproc
-LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    switch (message)
-    {
-        // On syskey down
+ switch (message)
+ {
+  // On syskey down
 		case WM_SYSKEYDOWN:
 			// ALT+ENTER trap keydown
 			if (wParam == VK_RETURN)
@@ -104,7 +104,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 0;
 			}
 			break;
-        // On syskey up
+  // On syskey up
 		case WM_SYSKEYUP:
 			// ALT+ENTER trap keyup
 			if (wParam == VK_RETURN)
@@ -117,7 +117,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 0;
 			}
 			break;
-        // On keydown
+  // On keydown
 		case WM_KEYDOWN:
 			// Overload printscreen(save a snapshot of the current screen
 			if(wParam == VK_SNAPSHOT)
@@ -135,7 +135,7 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 0;
 			}
 			break;
-        // On keyup
+  // On keyup
 		case WM_KEYUP:
 			// Overload printscreen(save a snapshot of the current screen)
 			if(!inMenu && wParam == VK_SNAPSHOT)
@@ -158,21 +158,21 @@ LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 				return 0;
 			}
 			break;
-        // On destroy window
+  // On destroy window
 		case WM_DESTROY:
 			// Restore the orignal window proc if we have it
 			if(lpDD->lpPrevWndFunc != NULL)
 			{
-				SetWindowLong(hwnd, GWL_WNDPROC, (LONG)lpDD->lpPrevWndFunc);
+				SetWindowLongW(hwnd, GWL_WNDPROC, (LONG)lpDD->lpPrevWndFunc);
 			}
 			break;
-    }
+ }
 	// Call original windiow proc by default
-    return CallWindowProc(lpDD->lpPrevWndFunc, hwnd, message, wParam, lParam);
+ return CallWindowProcW(lpDD->lpPrevWndFunc, hwnd, message, wParam, lParam);
 }
 
 // Main dll entry
-BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
 	LONG error;
 
@@ -185,25 +185,25 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
 
 		// Set default variables
 		debugLevel = 0;
-   		debugDisplay = -1;
+		debugDisplay = -1;
 
 		// Set time start
 		start_time = GetTickCount();
 
 		// Not in menu to start
 		inMenu = false;
-		
-        // Retrieve command line arguments
+
+		// Retrieve command line arguments
 		LPWSTR *szArgList;
 		int argCount;
-		szArgList = CommandLineToArgvW(GetCommandLine(), &argCount);
-		
-        // If arguments
-        if(szArgList != NULL)
+		szArgList = CommandLineToArgvW(GetCommandLineW(), &argCount);
+
+		// If arguments
+		if(szArgList != NULL)
 		{
 			for(int i = 0; i < argCount; i++)
 			{
-                // If debug
+				// If debug
 				if(wcscmp(szArgList[i], L"/ddrawdebug") == 0) {
 					debugDisplay = 0;
 					debugLevel = 2;
@@ -213,35 +213,31 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
 					freopen( "CONOUT$", "wb", stdout);
 					break;
 				}
-                // If ddrawlog
+				 // If ddrawlog
 				else if(wcscmp(szArgList[i], L"/ddrawlog") == 0) {
 					debugDisplay = 1;
 					debugLevel = 2;
 					// Redireect stdout to file
-					char curPath[MAX_PATH];
-					char filename[MAX_PATH];
-					GetCurrentDirectoryA(MAX_PATH, curPath);
-					sprintf_s(filename, MAX_PATH, "%s\\ddraw_debug.log", curPath);
-					freopen_s(&debugFile, filename, "wb", stdout);
+					freopen_s(&debugFile, "ddraw_debug.log", "wb", stdout);
 					break;
 				}
 			}
 		}
 		LocalFree(szArgList);
-        
+
 		// Hook setcursorpos
 		DetourRestoreAfterWith();
-        DetourTransactionBegin();
-        DetourUpdateThread(GetCurrentThread());
-        DetourAttach(&(PVOID&)TrueSetCursorPos, OverrideSetCursorPos);
+		DetourTransactionBegin();
+		DetourUpdateThread(GetCurrentThread());
+		DetourAttach(&(PVOID&)TrueSetCursorPos, OverrideSetCursorPos);
 		//DetourAttach(&(PVOID&)TrueLoadLibraryA, OverrideLoadLibraryA);
-        error = DetourTransactionCommit();
-        if (error == NO_ERROR) {
-            debugMessage(2, "DllMain(DLL_PROCESS_ATTACH)", "Successfully detoured SetCursorPos");
-        }
-        else {
-            debugMessage(1, "DllMain(DLL_PROCESS_ATTACH)", "Failed to detour SetCursorPos");
-        }
+		error = DetourTransactionCommit();
+		if (error == NO_ERROR) {
+			debugMessage(2, "DllMain(DLL_PROCESS_ATTACH)", "Successfully detoured SetCursorPos");
+		}
+		else {
+			debugMessage(1, "DllMain(DLL_PROCESS_ATTACH)", "Failed to detour SetCursorPos");
+		}
 		break;
 	case DLL_THREAD_ATTACH:
 		// Do nothing on thread attach
@@ -249,17 +245,16 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
 	case DLL_THREAD_DETACH:
 		// Do nothing on thread detach
 		break;
-	case DLL_PROCESS_DETACH:		
+	case DLL_PROCESS_DETACH:
 		// Delete DirectDrawWrapper object
 		delete lpDD;
 
 		// Detach function hook
 		DetourTransactionBegin();
-        DetourUpdateThread(GetCurrentThread());
-        DetourDetach(&(PVOID&)TrueSetCursorPos, OverrideSetCursorPos);
-        error = DetourTransactionCommit();
+		DetourUpdateThread(GetCurrentThread());
+		DetourDetach(&(PVOID&)TrueSetCursorPos, OverrideSetCursorPos);
+		error = DetourTransactionCommit();
 
-        
 		//cleanup debug console or file if exists
 		if(debugDisplay == 0)
 		{
@@ -269,7 +264,7 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
 		{
 			fclose(debugFile);
 		}
-        
+
 		break;
 	}
 	return TRUE;

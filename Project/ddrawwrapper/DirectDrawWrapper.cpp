@@ -1,6 +1,8 @@
 #include "DirectDrawWrapper.h"
 #include "resource.h"
 
+const wchar_t filename[] = L".\\ddraw_settings.ini";
+
 /*******************
 **IUnknown methods**
 ********************/
@@ -117,7 +119,38 @@ HRESULT __stdcall IDirectDrawWrapper::CreatePalette(DWORD dwFlags, LPPALETTEENTR
 HRESULT __stdcall IDirectDrawWrapper::CreateSurface(LPDDSURFACEDESC lpDDSurfaceDesc, LPDIRECTDRAWSURFACE FAR *lplpDDSurface, IUnknown FAR *pUnkOuter)
 {
 	char message[2048] = "\0";
-	sprintf_s(message, 2048, "lpDDSurfaceDesc->dwFlags:: %d", lpDDSurfaceDesc->dwFlags);
+	const DWORD dwCaps = lpDDSurfaceDesc->ddsCaps.dwCaps;
+	sprintf_s(message, sizeof(message), "%dx%d 0x%x%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s", lpDDSurfaceDesc->dwWidth, lpDDSurfaceDesc->dwHeight, dwCaps,
+#define CAPS2STR(name) dwCaps & name ? ", " #name : ""
+		CAPS2STR(DDSCAPS_3DDEVICE),
+		CAPS2STR(DDSCAPS_ALLOCONLOAD),
+		CAPS2STR(DDSCAPS_ALPHA),
+		CAPS2STR(DDSCAPS_BACKBUFFER),
+		CAPS2STR(DDSCAPS_COMPLEX),
+		/*CAPS2STR(DDSCAPS_EXECUTEBUFFER),*/
+		CAPS2STR(DDSCAPS_FLIP),
+		CAPS2STR(DDSCAPS_FRONTBUFFER),
+		CAPS2STR(DDSCAPS_HWCODEC),
+		CAPS2STR(DDSCAPS_LIVEVIDEO),
+		CAPS2STR(DDSCAPS_LOCALVIDMEM),
+		CAPS2STR(DDSCAPS_MIPMAP),
+		CAPS2STR(DDSCAPS_MODEX),
+		CAPS2STR(DDSCAPS_NONLOCALVIDMEM),
+		CAPS2STR(DDSCAPS_OFFSCREENPLAIN),
+		CAPS2STR(DDSCAPS_OVERLAY),
+		CAPS2STR(DDSCAPS_OPTIMIZED),
+		CAPS2STR(DDSCAPS_OWNDC),
+		CAPS2STR(DDSCAPS_PALETTE),
+		CAPS2STR(DDSCAPS_PRIMARYSURFACE),
+		CAPS2STR(DDSCAPS_PRIMARYSURFACELEFT),
+		CAPS2STR(DDSCAPS_STANDARDVGAMODE),
+		CAPS2STR(DDSCAPS_SYSTEMMEMORY),
+		CAPS2STR(DDSCAPS_TEXTURE),
+		CAPS2STR(DDSCAPS_VIDEOMEMORY),
+		CAPS2STR(DDSCAPS_VIDEOPORT),
+		CAPS2STR(DDSCAPS_VISIBLE),
+		CAPS2STR(DDSCAPS_WRITEONLY),
+		CAPS2STR(DDSCAPS_ZBUFFER));
 
 	// Create our surface wrapper and return success
 	lpAttachedSurface = new IDirectDrawSurfaceWrapper(this);
@@ -144,11 +177,11 @@ HRESULT __stdcall IDirectDrawWrapper::DuplicateSurface(LPDIRECTDRAWSURFACE lpDDS
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_CANTDUPLICATE
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_OUTOFMEMORY
-    DDERR_SURFACELOST
+	DDERR_CANTDUPLICATE
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_OUTOFMEMORY
+	DDERR_SURFACELOST
 	*/
 }
 
@@ -184,8 +217,8 @@ HRESULT __stdcall IDirectDrawWrapper::EnumDisplayModes(DWORD dwFlags, LPDDSURFAC
 	return DDERR_GENERIC;
 	
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -235,8 +268,8 @@ HRESULT __stdcall IDirectDrawWrapper::EnumSurfaces(DWORD dwFlags, LPDDSURFACEDES
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -259,9 +292,9 @@ HRESULT __stdcall IDirectDrawWrapper::FlipToGDISurface()
 
 	return DDERR_GENERIC;
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOTFOUND
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOTFOUND
 	*/
 }
 
@@ -287,7 +320,7 @@ HRESULT __stdcall IDirectDrawWrapper::GetCaps(LPDDCAPS lpDDDriverCaps, LPDDCAPS 
 
 	return DDERR_GENERIC;
 	/*
-    DDERR_INVALIDOBJECT
+	DDERR_INVALIDOBJECT
 	*/
 }
 
@@ -305,8 +338,8 @@ HRESULT __stdcall IDirectDrawWrapper::GetDisplayMode(LPDDSURFACEDESC lpDDSurface
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_UNSUPPORTEDMODE
+	DDERR_INVALIDOBJECT
+	DDERR_UNSUPPORTEDMODE
 	*/
 }
 
@@ -358,13 +391,13 @@ HRESULT __stdcall IDirectDrawWrapper::GetGDISurface(LPDIRECTDRAWSURFACE FAR *lpl
 	if(lplpGDIDDSSurface == NULL) return DDERR_INVALIDPARAMS;
 
 	// set lplpGDIDDSSurface to the interface for the surface 
-    // that currently controls the GDI's primary surface memory.
+	// that currently controls the GDI's primary surface memory.
 
 	return DDERR_GENERIC;
 	
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_NOTFOUND
+	DDERR_INVALIDOBJECT
+	DDERR_NOTFOUND
 	*/
 }
 
@@ -381,8 +414,8 @@ HRESULT __stdcall IDirectDrawWrapper::GetMonitorFrequency(LPDWORD lpdwFrequency)
 
 	return DDERR_GENERIC;
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_UNSUPPORTED
+	DDERR_INVALIDOBJECT
+	DDERR_UNSUPPORTED
 	*/
 }
 
@@ -408,9 +441,9 @@ HRESULT __stdcall IDirectDrawWrapper::GetScanLine(LPDWORD lpdwScanLine)
 
 	return DDERR_GENERIC;
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_UNSUPPORTED
-    DDERR_VERTICALBLANKINPROGRESS
+	DDERR_INVALIDOBJECT
+	DDERR_UNSUPPORTED
+	DDERR_VERTICALBLANKINPROGRESS
 	*/
 }
 
@@ -441,18 +474,18 @@ HRESULT __stdcall IDirectDrawWrapper::Initialize(GUID FAR *lpGUID)
 	debugMessage(1, "IDirectDrawWrapper::Initialize", "Partially Implemented");
 
 	// If you already used the DirectDrawCreate function to create a
-    // DirectDraw object, this method returns DDERR_ALREADYINITIALIZED
+	// DirectDraw object, this method returns DDERR_ALREADYINITIALIZED
 	return DDERR_ALREADYINITIALIZED;
 
 	/*
-    DDERR_ALREADYINITIALIZED
-    DDERR_DIRECTDRAWALREADYCREATED
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NODIRECTDRAWHW
-    DDERR_NODIRECTDRAWSUPPORT
-    DDERR_OUTOFMEMORY
+	DDERR_ALREADYINITIALIZED
+	DDERR_DIRECTDRAWALREADYCREATED
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NODIRECTDRAWHW
+	DDERR_NODIRECTDRAWSUPPORT
+	DDERR_OUTOFMEMORY
 	*/
 }
 
@@ -467,11 +500,11 @@ HRESULT __stdcall IDirectDrawWrapper::RestoreDisplayMode()
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_LOCKEDSURFACES
-    DDERR_NOEXCLUSIVEMODE
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_LOCKEDSURFACES
+	DDERR_NOEXCLUSIVEMODE
 	*/
 }
 
@@ -479,7 +512,20 @@ HRESULT __stdcall IDirectDrawWrapper::RestoreDisplayMode()
 HRESULT __stdcall IDirectDrawWrapper::SetCooperativeLevel(HWND in_hWnd, DWORD dwFlags)
 {
 	char message[2048] = "\0";
-	sprintf_s(message, 2048, "Completed in_hWnd: 0x%X, dwFlags: %d", in_hWnd, dwFlags);
+	sprintf_s(message, 2048, "Completed in_hWnd: %p, dwFlags: 0x%x%s%s%s%s%s%s%s%s%s%s%s%s", in_hWnd, dwFlags,
+#define FLAG2STR(name) dwFlags & name ? ", " #name : ""
+		FLAG2STR(DDSCL_ALLOWMODEX),
+		FLAG2STR(DDSCL_ALLOWREBOOT),
+		FLAG2STR(DDSCL_CREATEDEVICEWINDOW),
+		FLAG2STR(DDSCL_EXCLUSIVE),
+		FLAG2STR(DDSCL_FPUPRESERVE),
+		FLAG2STR(DDSCL_FPUSETUP),
+		FLAG2STR(DDSCL_FULLSCREEN),
+		FLAG2STR(DDSCL_MULTITHREADED),
+		FLAG2STR(DDSCL_NORMAL),
+		FLAG2STR(DDSCL_NOWINDOWCHANGES),
+		FLAG2STR(DDSCL_SETDEVICEWINDOW),
+		FLAG2STR(DDSCL_SETFOCUSWINDOW));
 
 	if(in_hWnd == NULL) 
 	{
@@ -492,8 +538,8 @@ HRESULT __stdcall IDirectDrawWrapper::SetCooperativeLevel(HWND in_hWnd, DWORD dw
 	hWnd = in_hWnd;
 	
 	// Install new wndproc
-	lpPrevWndFunc = (WNDPROC)GetWindowLong(hWnd, GWL_WNDPROC);
-	if(SetWindowLong(hWnd, GWL_WNDPROC, (LONG)WndProc) == 0)
+	lpPrevWndFunc = (WNDPROC)GetWindowLongW(hWnd, GWL_WNDPROC);
+	if(SetWindowLongW(hWnd, GWL_WNDPROC, (LONG)WndProc) == 0)
 	{
 		debugMessage(0, "IDirectDrawWrapper::SetCooperativeLevel", "Failed to overload WNDPROC");
 	}
@@ -504,7 +550,7 @@ HRESULT __stdcall IDirectDrawWrapper::SetCooperativeLevel(HWND in_hWnd, DWORD dw
 	// Create the requested d3d device for this display mode, report error on failure
 	if(!CreateD3DDevice())
 	{
-		MessageBox(NULL, TEXT("Error creating Direct3D9 Device"), TEXT("Error"), MB_OK | MB_ICONERROR);
+		MessageBoxW(NULL, L"Error creating Direct3D9 Device", L"Error", MB_OK | MB_ICONERROR);
 		return DDERR_GENERIC;
 	}
 
@@ -514,49 +560,49 @@ HRESULT __stdcall IDirectDrawWrapper::SetCooperativeLevel(HWND in_hWnd, DWORD dw
 
 	/*
 	DDSCL_ALLOWMODEX
-    Allows the use of Mode X display modes. This flag can be used only if the DDSCL_EXCLUSIVE and DDSCL_FULLSCREEN flags are present.
+	Allows the use of Mode X display modes. This flag can be used only if the DDSCL_EXCLUSIVE and DDSCL_FULLSCREEN flags are present.
 
 	DDSCL_ALLOWREBOOT
-    Allows CTRL+ALT+DEL to function while in exclusive (full-screen) mode.
+	Allows CTRL+ALT+DEL to function while in exclusive (full-screen) mode.
 
 	DDSCL_CREATEDEVICEWINDOW
-    This flag is supported in Windows 98 and Windows 2000 only. Indicates that DirectDraw will create and manage a default device window for this DirectDraw object.
+	This flag is supported in Windows 98 and Windows 2000 only. Indicates that DirectDraw will create and manage a default device window for this DirectDraw object.
 
 	DDSCL_EXCLUSIVE
-    Requests the exclusive level. This flag must be used with the DDSCL_FULLSCREEN flag.
+	Requests the exclusive level. This flag must be used with the DDSCL_FULLSCREEN flag.
 
 	DDSCL_FPUPRESERVE
-    The calling application cares about the FPU state and does not want Direct3D to modify it in ways visible to the application. In this mode, Direct3D saves and restores the FPU state every time that it needs to modify the FPU state.
+	The calling application cares about the FPU state and does not want Direct3D to modify it in ways visible to the application. In this mode, Direct3D saves and restores the FPU state every time that it needs to modify the FPU state.
 
 	DDSCL_FPUSETUP
-    The calling application is likely to keep the FPU set up for optimal Direct3D performance (single precision and exceptions disabled), so Direct3D does not need to explicitly set the FPU each time. This is the default state.
+	The calling application is likely to keep the FPU set up for optimal Direct3D performance (single precision and exceptions disabled), so Direct3D does not need to explicitly set the FPU each time. This is the default state.
 
 	DDSCL_FULLSCREEN
-    The exclusive-mode owner is responsible for the entire primary surface. The GDI can be ignored. This flag must be used with the DDSCL_EXCLUSIVE flag.
+	The exclusive-mode owner is responsible for the entire primary surface. The GDI can be ignored. This flag must be used with the DDSCL_EXCLUSIVE flag.
 
 	DDSCL_MULTITHREADED
-    Requests multithread-safe DirectDraw behavior. This causes Direct3D to take the global critical section more frequently.
+	Requests multithread-safe DirectDraw behavior. This causes Direct3D to take the global critical section more frequently.
 
 	DDSCL_NORMAL
-    The application functions as a typical Windows application. This flag cannot be used with the DDSCL_ALLOWMODEX, DDSCL_EXCLUSIVE, or DDSCL_FULLSCREEN flags.
+	The application functions as a typical Windows application. This flag cannot be used with the DDSCL_ALLOWMODEX, DDSCL_EXCLUSIVE, or DDSCL_FULLSCREEN flags.
 
 	DDSCL_NOWINDOWCHANGES
-    DirectDraw is not allowed to minimize or restore the application window on activation.
+	DirectDraw is not allowed to minimize or restore the application window on activation.
 
 	DDSCL_SETDEVICEWINDOW
-    This flag is supported in Windows 98 and Windows 2000 only. Indicates that the hWnd parameter is the window handle of the device window for this DirectDraw object. This flag cannot be used with the DDSCL_SETFOCUSWINDOW flag.
+	This flag is supported in Windows 98 and Windows 2000 only. Indicates that the hWnd parameter is the window handle of the device window for this DirectDraw object. This flag cannot be used with the DDSCL_SETFOCUSWINDOW flag.
 
 	DDSCL_SETFOCUSWINDOW
-    This flag is supported in Windows 98 and Windows 2000 only. Indicates that the hWnd parameter is the window handle of the focus window for this DirectDraw object. This flag cannot be used with the DDSCL_SETDEVICEWINDOW flag.
+	This flag is supported in Windows 98 and Windows 2000 only. Indicates that the hWnd parameter is the window handle of the focus window for this DirectDraw object. This flag cannot be used with the DDSCL_SETDEVICEWINDOW flag.
 	*/
 
 	/*
-    DDERR_EXCLUSIVEMODEALREADYSET
-    DDERR_HWNDALREADYSET
-    DDERR_HWNDSUBCLASSED
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_OUTOFMEMORY
+	DDERR_EXCLUSIVEMODEALREADYSET
+	DDERR_HWNDALREADYSET
+	DDERR_HWNDSUBCLASSED
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_OUTOFMEMORY
 	*/
 }
 
@@ -575,7 +621,7 @@ HRESULT __stdcall IDirectDrawWrapper::SetDisplayMode(DWORD dwWidth, DWORD dwHeig
 	// Init textures to new display mode
 	if(!CreateSurfaceTexture())
 	{
-		MessageBox(NULL, TEXT("Error creating Direct3D9 surface texture"), TEXT("Error"), MB_OK | MB_ICONERROR);
+		MessageBoxW(NULL, L"Error creating Direct3D9 surface texture", L"Error", MB_OK | MB_ICONERROR);
 		return DDERR_GENERIC;
 	}
 
@@ -583,16 +629,16 @@ HRESULT __stdcall IDirectDrawWrapper::SetDisplayMode(DWORD dwWidth, DWORD dwHeig
 
 	return DD_OK;
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDMODE
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_LOCKEDSURFACES
-    DDERR_NOEXCLUSIVEMODE
-    DDERR_SURFACEBUSY
-    DDERR_UNSUPPORTED
-    DDERR_UNSUPPORTEDMODE
-    DDERR_WASSTILLDRAWING
+	DDERR_GENERIC
+	DDERR_INVALIDMODE
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_LOCKEDSURFACES
+	DDERR_NOEXCLUSIVEMODE
+	DDERR_SURFACEBUSY
+	DDERR_UNSUPPORTED
+	DDERR_UNSUPPORTEDMODE
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -629,16 +675,16 @@ HRESULT __stdcall IDirectDrawWrapper::SetDisplayMode(DWORD dwWidth, DWORD dwHeig
 
 	return DD_OK;
 	
-    DDERR_GENERIC
-    DDERR_INVALIDMODE
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_LOCKEDSURFACES
-    DDERR_NOEXCLUSIVEMODE
-    DDERR_SURFACEBUSY
-    DDERR_UNSUPPORTED
-    DDERR_UNSUPPORTEDMODE
-    DDERR_WASSTILLDRAWING
+	DDERR_GENERIC
+	DDERR_INVALIDMODE
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_LOCKEDSURFACES
+	DDERR_NOEXCLUSIVEMODE
+	DDERR_SURFACEBUSY
+	DDERR_UNSUPPORTED
+	DDERR_UNSUPPORTEDMODE
+	DDERR_WASSTILLDRAWING
 	
 }*/
 
@@ -666,10 +712,10 @@ HRESULT __stdcall IDirectDrawWrapper::WaitForVerticalBlank(DWORD dwFlags, HANDLE
 	return DD_OK;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_UNSUPPORTED
-    DDERR_WASSTILLDRAWING
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_UNSUPPORTED
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -697,10 +743,10 @@ HRESULT __stdcall IDirectDrawWrapper::GetAvailableVideoMem(LPDDSCAPS2 lpDDSCaps2
 	return DDERR_GENERIC;
 	
 	/*
-    DDERR_INVALIDCAPS
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NODIRECTDRAWHW
+	DDERR_INVALIDCAPS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NODIRECTDRAWHW
 	*/
 }
 
@@ -720,10 +766,10 @@ HRESULT __stdcall IDirectDrawWrapper::EvaluateMode(DWORD dwFlags, DWORD *pSecond
 
 	/*
 	DDEM_MODEPASSED
-    The mode being tested has passed.
+	The mode being tested has passed.
 
 	DDEM_MODEFAILED
-    The mode being tested has failed.
+	The mode being tested has failed.
 	*/
 
 	/*
@@ -749,11 +795,11 @@ HRESULT __stdcall IDirectDrawWrapper::EvaluateMode(DWORD dwFlags, DWORD *pSecond
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_TESTFINISHED
-    DDERR_NEWMODE
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOTFOUND
+	DDERR_TESTFINISHED
+	DDERR_NEWMODE
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOTFOUND
 	*/
 }
 
@@ -794,17 +840,17 @@ HRESULT __stdcall IDirectDrawWrapper::GetSurfaceFromDC(HDC hdc, LPDIRECTDRAWSURF
 	if(lpDDS == NULL) return DDERR_INVALIDPARAMS;
 
 	// lpDDS is filled with a pointer to the IDirectDrawSurface7 interface
-    // for the surface if the call succeeds for the display device context hdc
+	// for the surface if the call succeeds for the display device context hdc
 	
 	// This method succeeds only for device context handles that identify 
-    // surfaces already associated with the DirectDraw object. 
+	// surfaces already associated with the DirectDraw object. 
 
 	return DDERR_GENERIC;
 	
 	/*	
-    DDERR_GENERIC
-    DDERR_INVALIDPARAMS
-    DDERR_OUTOFMEMORY
+	DDERR_GENERIC
+	DDERR_INVALIDPARAMS
+	DDERR_OUTOFMEMORY
 	DDERR_NOTFOUND
 	*/
 }
@@ -821,8 +867,8 @@ HRESULT __stdcall IDirectDrawWrapper::RestoreAllSurfaces()
 	return DDERR_GENERIC;
 	
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -875,12 +921,12 @@ HRESULT __stdcall IDirectDrawWrapper::StartModeTest(LPSIZE lpModesToTest, DWORD 
 	return DDERR_GENERIC;
 	
 	/*
-    DDERR_CURRENTLYNOTAVAIL
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOEXCLUSIVEMODE
-    DDERR_NOTFOUND
-    DDERR_TESTFINISHED
+	DDERR_CURRENTLYNOTAVAIL
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOEXCLUSIVEMODE
+	DDERR_NOTFOUND
+	DDERR_TESTFINISHED
 	*/
 }
 
@@ -895,10 +941,10 @@ HRESULT __stdcall IDirectDrawWrapper::TestCooperativeLevel()
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_EXCLUSIVEMODEALREADYSET
-    DDERR_NOEXCLUSIVEMODE
-    DDERR_WRONGMODE
+	DDERR_INVALIDOBJECT
+	DDERR_EXCLUSIVEMODEALREADYSET
+	DDERR_NOEXCLUSIVEMODE
+	DDERR_WRONGMODE
 	*/
 }
 
@@ -921,7 +967,7 @@ IDirectDrawWrapper::IDirectDrawWrapper()
 	surfaceTexture = NULL;
 	vertexBuffer = NULL;
 
-    // Sprite Info
+	// Sprite Info
 	d3dSprite = NULL;
 	menuTexture = NULL;
 	curMenuFrame = 0;
@@ -1023,7 +1069,7 @@ IDirectDrawWrapper::IDirectDrawWrapper()
 
 	inMenu = false;
 	curMenu = 0;
-    // Resolutions
+	// Resolutions
 	windowedResolutions = new POINT[10];
 	windowedResolutionCount = 10;
 	windowedResolutions[0].x = 640;
@@ -1052,21 +1098,16 @@ IDirectDrawWrapper::IDirectDrawWrapper()
 	fullscreenRefreshes = NULL;
 
 	// Load settings from ini file
-	wchar_t curPath[MAX_PATH];
-	wchar_t filename[MAX_PATH];
 	wchar_t temp[1024];
 
-	// Get current working directory
-	GetCurrentDirectory(MAX_PATH, curPath);
-	wsprintf(filename, TEXT("%s\\ddraw_settings.ini"), curPath);
 	// Get windowed resolution
-	GetPrivateProfileString(TEXT("video"), TEXT("windowedResolution"), TEXT("640x480"), temp, 1024, filename);
-	for(int i = 0; i < 1024 || temp[i] == TEXT('\0'); i++)
+	GetPrivateProfileStringW(L"video", L"windowedResolution", L"640x480", temp, 1024, filename);
+	for(int i = 0; i < 1024 || temp[i] == L'\0'; i++)
 	{
 		// Split on x or X
-		if(temp[i] == TEXT('x') || temp[i] == TEXT('X'))
+		if(temp[i] == L'x' || temp[i] == L'X')
 		{
-			temp[i] = TEXT('\0');
+			temp[i] = L'\0';
 			// Attempt to convert to int
 			displayWidthWindowed = _wtoi(temp);
 			displayHeightWindowed = _wtoi(&(temp[i + 1]));
@@ -1080,13 +1121,13 @@ IDirectDrawWrapper::IDirectDrawWrapper()
 		}
 	}
 	// Get fullscreen resolution
-	GetPrivateProfileString(TEXT("video"), TEXT("fullscreenResolution"), TEXT("640x480"), temp, 1024, filename);
-	for(int i = 0; i < 1024 || temp[i] == TEXT('\0'); i++)
+	GetPrivateProfileStringW(L"video", L"fullscreenResolution", L"640x480", temp, 1024, filename);
+	for(int i = 0; i < 1024 || temp[i] == L'\0'; i++)
 	{
 		// Split on x or X
-		if(temp[i] == TEXT('x') || temp[i] == TEXT('X'))
+		if(temp[i] == L'x' || temp[i] == L'X')
 		{
-			temp[i] = TEXT('\0');
+			temp[i] = L'\0';
 			// Attempt to convert to int
 			displayWidthFullscreen = _wtoi(temp);
 			displayHeightFullscreen = _wtoi(&(temp[i + 1]));
@@ -1100,8 +1141,8 @@ IDirectDrawWrapper::IDirectDrawWrapper()
 		}
 	}
 	// Default to fullscreen mode?
-	GetPrivateProfileString(TEXT("video"), TEXT("fullscreen"), TEXT("0"), temp, 1024, filename);
-	if(temp[0] == TEXT('1'))
+	GetPrivateProfileStringW(L"video", L"fullscreen", L"0", temp, 1024, filename);
+	if(temp[0] == L'1')
 	{
 		isWindowed = false;
 	}
@@ -1120,8 +1161,8 @@ IDirectDrawWrapper::IDirectDrawWrapper()
 		displayWidth = displayWidthFullscreen;
 		displayHeight = displayHeightFullscreen;
 	}
-	GetPrivateProfileString(TEXT("video"), TEXT("vsync"), TEXT("1"), temp, 1024, filename);
-	if(temp[0] == TEXT('1'))
+	GetPrivateProfileStringW(L"video", L"vsync", L"1", temp, 1024, filename);
+	if(temp[0] == L'1')
 	{
 		vSync = false;
 	}
@@ -1130,7 +1171,7 @@ IDirectDrawWrapper::IDirectDrawWrapper()
 		vSync = true;
 	}
 
-	GetPrivateProfileString(TEXT("video"), TEXT("refresh"), TEXT("60"), temp, 1024, filename);
+	GetPrivateProfileStringW(L"video", L"refresh", L"60", temp, 1024, filename);
 	refreshRate = _wtoi(temp);
 	// Failure to convert set to default
 	if(refreshRate == 0)
@@ -1227,7 +1268,7 @@ HRESULT IDirectDrawWrapper::WrapperInitialize(WNDPROC wp, HMODULE hMod)
 	if(d3d9Object == NULL)
 	{
 		debugMessage(0, "IDirectDrawWrapper::WrapperInitialize", "Failed to create Direct3D9 object");
-		MessageBox(NULL, TEXT("Failed to create Direct3D9 object."), TEXT("Fatal Error"), MB_OK | MB_ICONERROR);
+		MessageBoxW(NULL, L"Failed to create Direct3D9 object.", L"Fatal Error", MB_OK | MB_ICONERROR);
 		// Error creation directdraw
 		return DDERR_GENERIC;
 	}
@@ -1502,7 +1543,7 @@ BOOL IDirectDrawWrapper::MenuKey(WPARAM vKey)
 		else
 		{
 			curMenu = 0;
-            
+			
 			// Init to current settings
 			menuWindowed = isWindowed;
 			menuvSync = vSync;
@@ -1643,28 +1684,23 @@ BOOL IDirectDrawWrapper::MenuKey(WPARAM vKey)
 		Present();
 
 		// Write changes to ini file
-		wchar_t curPath[MAX_PATH];
-		wchar_t filename[MAX_PATH];
 		wchar_t temp[1024];
 
-		// Get current working directory
-		GetCurrentDirectory(MAX_PATH, curPath);
-		wsprintf(filename, TEXT("%s\\ddraw_settings.ini"), curPath);	
 		temp[0] = '\0';
-		wsprintf(temp, TEXT("%dx%d"), displayWidthWindowed, displayHeightWindowed);
-		WritePrivateProfileString(TEXT("video"), TEXT("windowedResolution"), temp, filename);
+		wsprintfW(temp, L"%dx%d", displayWidthWindowed, displayHeightWindowed);
+		WritePrivateProfileStringW(L"video", L"windowedResolution", temp, filename);
 		temp[0] = '\0';
-		wsprintf(temp, TEXT("%dx%d"), displayWidthFullscreen, displayHeightFullscreen);
-		WritePrivateProfileString(TEXT("video"), TEXT("fullscreenResolution"), temp, filename);
+		wsprintfW(temp, L"%dx%d", displayWidthFullscreen, displayHeightFullscreen);
+		WritePrivateProfileStringW(L"video", L"fullscreenResolution", temp, filename);
 		temp[0] = '\0';
-		wsprintf(temp, TEXT("%d"), refreshRate);
-		WritePrivateProfileString(TEXT("video"), TEXT("refresh"), temp, filename);
+		wsprintfW(temp, L"%d", refreshRate);
+		WritePrivateProfileStringW(L"video", L"refresh", temp, filename);
 		temp[0] = '\0';
-		wsprintf(temp, TEXT("%d"), isWindowed ? 0 : 1);
-		WritePrivateProfileString(TEXT("video"), TEXT("fullscreen"), temp, filename);
+		wsprintfW(temp, L"%d", isWindowed ? 0 : 1);
+		WritePrivateProfileStringW(L"video", L"fullscreen", temp, filename);
 		temp[0] = '\0';
-		wsprintf(temp, TEXT("%d"), vSync ? 1 : 0);
-		WritePrivateProfileString(TEXT("video"), TEXT("vsync"), temp, filename);
+		wsprintfW(temp, TEXT("%d"), vSync ? 1 : 0);
+		WritePrivateProfileStringW(L"video", L"vsync", temp, filename);
 	}
 
 	return inMenu;
@@ -1675,17 +1711,17 @@ BOOL IDirectDrawWrapper::MenuKey(WPARAM vKey)
  */ 
 void IDirectDrawWrapper::ToggleFullscreen()
 {
-    // If windowed
+	// If windowed
 	if(isWindowed)
 	{
-        // Switch to full screen
+		// Switch to full screen
 		isWindowed = false;
 		displayWidth = displayWidthFullscreen;
 		displayHeight = displayHeightFullscreen;
 	}
 	else
 	{
-        // Switch to windowed
+		// Switch to windowed
 		isWindowed = true;
 		displayWidth = displayWidthWindowed;
 		displayHeight = displayHeightWindowed;
@@ -1694,9 +1730,9 @@ void IDirectDrawWrapper::ToggleFullscreen()
 		presParams.Windowed = true;
 		d3d9Device->Reset(&presParams);
 	}
-    // Adjust window
+	// Adjust window
 	AdjustWindow();
-    // Recreated D3D objects
+	// Recreated D3D objects
 	CreateD3DDevice();
 	CreateSurfaceTexture();
 
@@ -1708,37 +1744,32 @@ void IDirectDrawWrapper::ToggleFullscreen()
  */ 
 void IDirectDrawWrapper::DoSnapshot()
 {
-	wchar_t curPath[MAX_PATH];
-
-	// Get current working directory
-	GetCurrentDirectory(MAX_PATH, curPath);
-	
 	// Create filename first part "Diablo_YYYYMMDD_HHMMSS.png"
-	wchar_t filename[MAX_PATH];
+	wchar_t name[MAX_PATH];
 	SYSTEMTIME sysTime;
 	GetSystemTime(&sysTime);
-	wchar_t title[1024];
-	GetWindowText(hWnd, title, 1024);
-	wsprintf(filename, TEXT("%s\\%s_%.4d%.2d%.2d_%.2d%.2d%.2d.png"), curPath, title, sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
-	
+	wchar_t title[64];
+	GetWindowTextW(hWnd, title, 64);
+	wsprintfW(name, L"%s_%.4d%.2d%.2d_%.2d%.2d%.2d.png", title, sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond);
+
 	// Make sure it doesn't already exist
 	WIN32_FIND_DATA findData;
-	HANDLE findHandle = FindFirstFile(filename, &findData);
+	HANDLE findHandle = FindFirstFileW(name, &findData);
 	int curFileNum = 1;
 	while(findHandle != INVALID_HANDLE_VALUE)
 	{
 		// Close find
 		FindClose(findHandle);
 		// Add (num) to end of filename
-		wsprintf(filename, TEXT("%s\\Diablo_%.4d%.2d%.2d_%.2d%.2d%.2d(%d).png"), curPath, sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, curFileNum);
+		wsprintfW(name, L"%s_%.4d%.2d%.2d_%.2d%.2d%.2d(%d).png", title, sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, curFileNum);
 		// Increment current file
 		curFileNum++;
 		// Check if this exists
-		findHandle = FindFirstFile(filename, &findData);
+		findHandle = FindFirstFileW(name, &findData);
 	}
 
-    // Save texture to file
-	if(D3DXSaveTextureToFile(filename, D3DXIFF_PNG, surfaceTexture, NULL) != D3D_OK)
+	// Save texture to file
+	if(D3DXSaveTextureToFileW(name, D3DXIFF_PNG, surfaceTexture, NULL) != D3D_OK)
 	{
 		debugMessage(0, "IDirectDrawWrapper::DoSnapshot", "Error saving texture to file.");
 		return;
@@ -1755,11 +1786,11 @@ void IDirectDrawWrapper::AdjustWindow()
 	// If we don't yet have the window quit without action
 	if(hWnd == NULL) return;
 
-    // window mode
+	// window mode
 	if(isWindowed)
 	{
 		// Window with border/caption
-		SetWindowLong(hWnd, GWL_STYLE, WS_VISIBLE | WS_CAPTION);
+		SetWindowLongW(hWnd, GWL_STYLE, WS_VISIBLE | WS_CAPTION);
 		// Set window size
 		SetWindowPos(hWnd, NULL, 0, 0, displayWidth, displayHeight, SWP_NOMOVE | SWP_NOZORDER);
 		// Adjust for window decoration to ensure client area matches display size
@@ -1773,7 +1804,7 @@ void IDirectDrawWrapper::AdjustWindow()
 	else
 	{
 		// Window borderless and fullscreen size
-		SetWindowLong(hWnd, GWL_STYLE, WS_VISIBLE);
+		SetWindowLongW(hWnd, GWL_STYLE, WS_VISIBLE);
 		// Set full size
 		SetWindowPos(hWnd, NULL, 0, 0, displayWidth, displayHeight, SWP_NOZORDER);
 	}
@@ -1799,14 +1830,14 @@ bool IDirectDrawWrapper::CreateD3DDevice()
 		surfaceTexture = NULL;
 	}
 
-    // Release sprite
+	// Release sprite
 	if(d3dSprite != NULL)
 	{
 		d3dSprite->Release();
 		d3dSprite = NULL;
 	}
 
-    // Release texture
+	// Release texture
 	if(menuTexture != NULL)
 	{
 		menuTexture ->Release();
@@ -1838,7 +1869,7 @@ bool IDirectDrawWrapper::CreateD3DDevice()
 	{
 		// No dynamic textures
 		debugMessage(0, "IDirectDrawWrapper::createD3DDevice","Device does not support dynamic textures");
-		MessageBox(NULL, TEXT("This patch requires a d3d9 driver that supports dynamic textures."), TEXT("Driver Doesn't Meet Requirements"), MB_OK);
+		MessageBoxW(NULL, L"This patch requires a d3d9 driver that supports dynamic textures.", L"Driver Doesn't Meet Requirements", MB_OK);
 		return false;
 	}
 	
@@ -1866,7 +1897,7 @@ bool IDirectDrawWrapper::CreateD3DDevice()
 		if(d3d9Object->EnumAdapterModes(D3DADAPTER_DEFAULT, D3DFMT_X8R8G8B8, i, &d3ddispmode) != D3D_OK)
 		{
 			debugMessage(0, "IDirectDrawWrapper::createD3DDevice","EnumAdapterModes failed");
-			MessageBox(NULL, TEXT("Couldn't find full screen mode for requested format."), TEXT("Error Setting Mode"), MB_OK);
+			MessageBoxW(NULL, L"Couldn't find full screen mode for requested format.", L"Error Setting Mode", MB_OK);
 			return false;		
 		}
 		if(d3ddispmode.Width == displayWidth &&  d3ddispmode.Height == displayHeight && d3ddispmode.RefreshRate == refreshRate)
@@ -1902,7 +1933,7 @@ bool IDirectDrawWrapper::CreateD3DDevice()
 		if(!modeFound)
 		{
 			debugMessage(0, "IDirectDrawWrapper::createD3DDevice","Failed to find compatible fullscreen display mode");
-			MessageBox(NULL, TEXT("Couldn't find full screen mode for requested format."), TEXT("Error Setting Mode"), MB_OK);
+			MessageBoxW(NULL, L"Couldn't find full screen mode for requested format.", L"Error Setting Mode", MB_OK);
 			return false;
 		}
 		// Fullscreen
@@ -1935,7 +1966,7 @@ bool IDirectDrawWrapper::CreateD3DDevice()
 		if(d3d9Object->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &presParams, &d3d9Device) != D3D_OK)
 		{
 			debugMessage(0, "IDirectDrawWrapper::createD3DDevice","Failed to create Direct3D9 device");
-			MessageBox(NULL, TEXT("Failed to create Direct3D9 device."), TEXT("Direct3D9 Device Error"), MB_OK);
+			MessageBoxW(NULL, L"Failed to create Direct3D9 device.", L"Direct3D9 Device Error", MB_OK);
 			return false;
 		}
 	}
@@ -1944,7 +1975,7 @@ bool IDirectDrawWrapper::CreateD3DDevice()
 		if(d3d9Object->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &presParams, &d3d9Device) != D3D_OK)
 		{
 			debugMessage(0, "IDirectDrawWrapper::createD3DDevice","Failed to create Direct3D9 device");
-			MessageBox(NULL, TEXT("Failed to create Direct3D9 device."), TEXT("Direct3D9 Device Error"), MB_OK);
+			MessageBoxW(NULL, L"Failed to create Direct3D9 device.", L"Direct3D9 Device Error", MB_OK);
 			return false;
 		}
 	}
@@ -1953,13 +1984,13 @@ bool IDirectDrawWrapper::CreateD3DDevice()
 	if(D3DXCreateSprite(d3d9Device, &d3dSprite) != D3D_OK)
 	{
 		debugMessage(0, "IDirectDrawWrapper::createD3DDevice","Failed to create Direct3DX9 sprite");
-		MessageBox(NULL, TEXT("Failed to create Direct3DX9 sprite."), TEXT("Direct3DX9 Error"), MB_OK);
+		MessageBoxW(NULL, L"Failed to create Direct3DX9 sprite.", L"Direct3DX9 Error", MB_OK);
 		return false;
 	}
 
 	debugMessage(2, "IDirectDrawWrapper::createD3DDevice", "Create D3D9 Object");
 	
-    // Success
+	// Success
 	return true;
 }
 
@@ -2040,7 +2071,7 @@ bool IDirectDrawWrapper::CreateSurfaceTexture()
 	}
 	else
 	{
-			debugMessage(1, "IDirectDrawWrapper::CreateSurfaceTexture","Device doesn't support linear sampling");
+		debugMessage(1, "IDirectDrawWrapper::CreateSurfaceTexture","Device doesn't support linear sampling");
 	}
 
 	// Setup verticies (0,0,currentWidth,currentHeight)
@@ -2085,7 +2116,7 @@ bool IDirectDrawWrapper::CreateSurfaceTexture()
 	vertices[3].u = 0.0f;
 	vertices[3].v = 1.0f;
 
-    // Unlcok vertex buffer
+	// Unlcok vertex buffer
 	if(vertexBuffer->Unlock() != D3D_OK)
 	{
 		debugMessage(0, "IDirectDrawWrapper::CreateSurfaceTexture","Unable to unlock vertex buffer");
@@ -2121,14 +2152,14 @@ bool IDirectDrawWrapper::ReinitDevice()
 		surfaceTexture = NULL;
 	}
 
-    // Release sprite
+	// Release sprite
 	if(d3dSprite != NULL)
 	{
 		d3dSprite->Release();
 		d3dSprite = NULL;
 	}
 
-    // Release texture
+	// Release texture
 	if(menuTexture != NULL)
 	{
 		menuTexture->Release();
@@ -2139,7 +2170,7 @@ bool IDirectDrawWrapper::ReinitDevice()
 	if(d3d9Device->Reset(&presParams) != D3D_OK)
 	{
 		debugMessage(0, "IDirectDrawWrapper::ReinitDevice","Failed to reset Direct3D9 device");
-		MessageBox(NULL, TEXT("Failed to reset Direct3D9 device."), TEXT("Direct3D9 Error"), MB_OK);
+		MessageBoxW(NULL, L"Failed to reset Direct3D9 device.", L"Direct3D9 Error", MB_OK);
 		return false;
 	}
 
@@ -2150,4 +2181,3 @@ bool IDirectDrawWrapper::ReinitDevice()
 	// Recreate the surface texutre
 	return CreateSurfaceTexture();
 }
-

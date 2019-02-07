@@ -7,7 +7,7 @@
 
 // Retrieves pointers to the supported interfaces on an object.
 HRESULT __stdcall IDirectDrawSurfaceWrapper::QueryInterface(REFIID riid, LPVOID FAR * ppvObj)
-{	
+{
 	debugMessage(1, "IDirectDrawSurfaceWrapper::QueryInterface", "Partially Implemented");
 
 	// Provide the directdraw interface for all versions up to 7
@@ -73,13 +73,13 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::AddAttachedSurface(LPDIRECTDRAWSURF
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_CANNOTATTACHSURFACE
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_SURFACEALREADYATTACHED
-    DDERR_SURFACELOST
-    DDERR_WASSTILLDRAWING
+	DDERR_CANNOTATTACHSURFACE
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_SURFACEALREADYATTACHED
+	DDERR_SURFACELOST
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -126,68 +126,68 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::Blt(LPRECT lpDestRect, LPDIRECTDRAW
 
 	/*
 	DDBLT_COLORFILL
-    Uses the dwFillColor member of the DDBLTFX structure as the RGB color that fills the destination rectangle on the destination surface.
+	Uses the dwFillColor member of the DDBLTFX structure as the RGB color that fills the destination rectangle on the destination surface.
 
 	DDBLT_DDFX
-    Uses the dwDDFX member of the DDBLTFX structure to specify the effects to use for this bitblt.
+	Uses the dwDDFX member of the DDBLTFX structure to specify the effects to use for this bitblt.
 
 	DDBLT_DDROPS
-    Uses the dwDDROP member of the DDBLTFX structure to specify the raster operations (ROPS) that are not part of the Win32 API.
+	Uses the dwDDROP member of the DDBLTFX structure to specify the raster operations (ROPS) that are not part of the Win32 API.
 
 	DDBLT_DEPTHFILL
-    Uses the dwFillDepth member of the DDBLTFX structure as the depth value with which to fill the destination rectangle on the destination z-buffer surface.
+	Uses the dwFillDepth member of the DDBLTFX structure as the depth value with which to fill the destination rectangle on the destination z-buffer surface.
 
 	DDBLT_KEYDESTOVERRIDE
-    Uses the ddckDestColorkey member of the DDBLTFX structure as the color key for the destination surface.
+	Uses the ddckDestColorkey member of the DDBLTFX structure as the color key for the destination surface.
 
 	DDBLT_KEYSRCOVERRIDE
-    Uses the ddckSrcColorkey member of the DDBLTFX structure as the color key for the source surface.
+	Uses the ddckSrcColorkey member of the DDBLTFX structure as the color key for the source surface.
 
 	DDBLT_ROP
-    Uses the dwROP member of the DDBLTFX structure for the ROP for this bitblt. These ROPs are the same as those defined in the Win32 API.
+	Uses the dwROP member of the DDBLTFX structure for the ROP for this bitblt. These ROPs are the same as those defined in the Win32 API.
 
 	DDBLT_ROTATIONANGLE
-    Uses the dwRotationAngle member of the DDBLTFX structure as the rotation angle (specified in 1/100s of a degree) for the surface.
+	Uses the dwRotationAngle member of the DDBLTFX structure as the rotation angle (specified in 1/100s of a degree) for the surface.
 
 	*Color key flags*
 	DDBLT_KEYDEST
-    Uses the color key that is associated with the destination surface.
+	Uses the color key that is associated with the destination surface.
 
 	DDBLT_KEYSRC
-    Uses the color key that is associated with the source surface.
+	Uses the color key that is associated with the source surface.
 
 	*Behavior flags*
 	DDBLT_ASYNC
-    Performs this bitblt asynchronously through the first in, first out (FIFO) hardware in the order received. If no room is available in the FIFO hardware, the call fails.
+	Performs this bitblt asynchronously through the first in, first out (FIFO) hardware in the order received. If no room is available in the FIFO hardware, the call fails.
 
 	DDBLT_DONOTWAIT
-    Returns without bitbltting and also returns DDERR_WASSTILLDRAWING if the bitbltter is busy.
+	Returns without bitbltting and also returns DDERR_WASSTILLDRAWING if the bitbltter is busy.
 
 	DDBLT_WAIT
-    Postpones the DDERR_WASSTILLDRAWING return value if the bitbltter is busy, and returns as soon as the bitblt can be set up or another error occurs
+	Postpones the DDERR_WASSTILLDRAWING return value if the bitbltter is busy, and returns as soon as the bitblt can be set up or another error occurs
 	*/
 
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDCLIPLIST
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDRECT
-    DDERR_NOALPHAHW
-    DDERR_NOBLTHW
-    DDERR_NOCLIPLIST
-    DDERR_NODDROPSHW
-    DDERR_NOMIRRORHW
-    DDERR_NORASTEROPHW
-    DDERR_NOROTATIONHW
-    DDERR_NOSTRETCHHW
-    DDERR_NOZBUFFERHW
-    DDERR_SURFACEBUSY
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
-    DDERR_WASSTILLDRAWING
+	DDERR_GENERIC
+	DDERR_INVALIDCLIPLIST
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDRECT
+	DDERR_NOALPHAHW
+	DDERR_NOBLTHW
+	DDERR_NOCLIPLIST
+	DDERR_NODDROPSHW
+	DDERR_NOMIRRORHW
+	DDERR_NORASTEROPHW
+	DDERR_NOROTATIONHW
+	DDERR_NOSTRETCHHW
+	DDERR_NOZBUFFERHW
+	DDERR_SURFACEBUSY
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -208,36 +208,36 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::BltFast(DWORD dwX, DWORD dwY, LPDIR
 	if(lpDDSrcSurface == NULL) return DDERR_INVALIDPARAMS;
 
 	// BltFast works only on display memory surfaces and cannot clip when 
-    // it performs a bitblt operation. If you use this method on a surface 
-    // with an attached clipper, the call fails, and the method returns DDERR_UNSUPPORTED.
+	// it performs a bitblt operation. If you use this method on a surface 
+	// with an attached clipper, the call fails, and the method returns DDERR_UNSUPPORTED.
 
 	/*
 	DDBLTFAST_DESTCOLORKEY
-    A transparent bitblt that uses the destination color key.
+	A transparent bitblt that uses the destination color key.
 
 	DDBLTFAST_NOCOLORKEY
-    A normal copy bitblt with no transparency.
+	A normal copy bitblt with no transparency.
 
 	DDBLTFAST_SRCCOLORKEY
-    A transparent bitblt that uses the source color key.
+	A transparent bitblt that uses the source color key.
 
 	DDBLTFAST_WAIT
-    Postpones the DDERR_WASSTILLDRAWING message if the bitbltter is busy, and returns as soon as the bitblt can be set up or another error occurs
+	Postpones the DDERR_WASSTILLDRAWING message if the bitbltter is busy, and returns as soon as the bitblt can be set up or another error occurs
 	*/
 
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_EXCEPTION
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDRECT
-    DDERR_NOBLTHW
-    DDERR_SURFACEBUSY
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
-    DDERR_WASSTILLDRAWING
+	DDERR_EXCEPTION
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDRECT
+	DDERR_NOBLTHW
+	DDERR_SURFACEBUSY
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -258,7 +258,7 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::DeleteAttachedSurface(DWORD dwFlags
 
 	/*
 	Implicit attachments, those formed by DirectDraw rather than the IDirectDrawSurface7::AddAttachedSurface 
-    method, cannot be detached.
+	method, cannot be detached.
 
 	Detaching surfaces from a flipping chain can alter other surfaces in the chain. If a front buffer is detached from 
 	a flipping chain, the next surface in the chain becomes the front buffer, and the following surface becomes the back 
@@ -270,11 +270,11 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::DeleteAttachedSurface(DWORD dwFlags
 	return DDERR_GENERIC;
 	
 	/*
-    DDERR_CANNOTDETACHSURFACE
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_SURFACELOST
-    DDERR_SURFACENOTATTACHED
+	DDERR_CANNOTDETACHSURFACE
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_SURFACELOST
+	DDERR_SURFACENOTATTACHED
 	*/
 }
 
@@ -305,9 +305,9 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::EnumAttachedSurfaces(LPVOID lpConte
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_SURFACELOST
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_SURFACELOST
 	*/
 }
 
@@ -322,10 +322,10 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::EnumOverlayZOrders(DWORD dwFlags, L
 
 	/*
 	DDENUMOVERLAYZ_BACKTOFRONT
-    Enumerates overlays back to front.
+	Enumerates overlays back to front.
 
 	DDENUMOVERLAYZ_FRONTTOBACK
-    Enumerates overlays front to back.
+	Enumerates overlays front to back.
 	*/
 
 	//for each overlay surface attached to this surface
@@ -336,8 +336,8 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::EnumOverlayZOrders(DWORD dwFlags, L
 
 	return DDERR_GENERIC;
 	/*	
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -359,39 +359,39 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::Flip(LPDIRECTDRAWSURFACE lpDDSurfac
 
 	/*
 	DDFLIP_DONOTWAIT
-    On IDirectDrawSurface7 interfaces, the default is DDFLIP_WAIT. If you want to override the default and use time when the 
+	On IDirectDrawSurface7 interfaces, the default is DDFLIP_WAIT. If you want to override the default and use time when the 
 	accelerator is busy (as denoted by the DDERR_WASSTILLDRAWING return value), use DDFLIP_DONOTWAIT.
 
 	DDFLIP_EVEN
-    For use only when displaying video in an overlay surface. The new surface contains data from the even field of a video signal.
+	For use only when displaying video in an overlay surface. The new surface contains data from the even field of a video signal.
 	This flag cannot be used with the DDFLIP_ODD flag.
 
 	DDFLIP_STEREO
-    DirectDraw flips and displays a main stereo surface. When this flag is set, stereo autoflipping is enabled. 
+	DirectDraw flips and displays a main stereo surface. When this flag is set, stereo autoflipping is enabled. 
 	The hardware automatically flips between the left and right buffers during each screen refresh.
 
 	DDFLIP_INTERVAL2
 	DDFLIP_INTERVAL3
 	DDFLIP_INTERVAL4
-    The DDFLIP_INTERVAL2, DDFLIP_INTERVAL3, and DDFLIP_INTERVAL4 flags indicate how many vertical retraces to wait between each flip. The default is 1.
+	The DDFLIP_INTERVAL2, DDFLIP_INTERVAL3, and DDFLIP_INTERVAL4 flags indicate how many vertical retraces to wait between each flip. The default is 1.
 	DirectDraw returns DERR_WASSTILLDRAWING for each surface involved in the flip until the specified number of vertical retraces has occurred. 
 	If DDFLIP_INTERVAL2 is set, DirectDraw flips on every second vertical sync; if DDFLIP_INTERVAL3, on every third sync; and if DDFLIP_INTERVAL4, 
 	on every fourth sync.
-    These flags are effective only if DDCAPS2_FLIPINTERVAL bit is set in the dwCaps2 member of the DDCAPS structure that is returned for the display hardware.
+	These flags are effective only if DDCAPS2_FLIPINTERVAL bit is set in the dwCaps2 member of the DDCAPS structure that is returned for the display hardware.
 
 	DDFLIP_NOVSYNC
-    Causes DirectDraw to perform the physical flip as close as possible to the next scan line. Subsequent operations that 
+	Causes DirectDraw to perform the physical flip as close as possible to the next scan line. Subsequent operations that 
 	involve the two flipped surfaces do not check whether the physical flip has finished—that is, they do not return 
 	DDERR_WASSTILLDRAWING for that reason (but might for other reasons). This allows an application to perform flips at 
 	a higher frequency than the monitor refresh rate, but might introduce visible artifacts.
-    If DDCAPS2_FLIPNOVSYNC is not set in the dwCaps2 member of the DDCAPS structure that is returned for the display hardware, DDFLIP_NOVSYNC has no effect.
+	If DDCAPS2_FLIPNOVSYNC is not set in the dwCaps2 member of the DDCAPS structure that is returned for the display hardware, DDFLIP_NOVSYNC has no effect.
 
 	DDFLIP_ODD
-    For use only when displaying video in an overlay surface. The new surface contains data from the odd field of a video signal. 
+	For use only when displaying video in an overlay surface. The new surface contains data from the odd field of a video signal. 
 	This flag cannot be used with the DDFLIP_EVEN flag.
 
 	DDFLIP_WAIT
-    Typically, if the flip cannot be set up because the state of the display hardware is not appropriate, the DDERR_WASSTILLDRAWING 
+	Typically, if the flip cannot be set up because the state of the display hardware is not appropriate, the DDERR_WASSTILLDRAWING 
 	error returns immediately, and no flip occurs. Setting this flag causes Flip to continue trying to flip if it receives the 
 	DDERR_WASSTILLDRAWING error from the hardware abstraction layer (HAL). Flip does not return until the flipping operation 
 	has been successfully set up or another error, such as DDERR_SURFACEBUSY, is returne
@@ -400,15 +400,15 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::Flip(LPDIRECTDRAWSURFACE lpDDSurfac
 	return DDERR_GENERIC;
 	
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOFLIPHW
-    DDERR_NOTFLIPPABLE
-    DDERR_SURFACEBUSY
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
-    DDERR_WASSTILLDRAWING
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOFLIPHW
+	DDERR_NOTFLIPPABLE
+	DDERR_SURFACEBUSY
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -432,10 +432,10 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetAttachedSurface(LPDDSCAPS lpDDSC
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOTFOUND
-    DDERR_SURFACELOST
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOTFOUND
+	DDERR_SURFACELOST
 	*/
 }
 
@@ -447,23 +447,23 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetBltStatus(DWORD dwFlags)
 
 	/*
 	DDGBS_CANBLT
-    Inquires whether a bitblt that involves this surface can occur immediately, and returns DD_OK if the bitblt can be completed.
+	Inquires whether a bitblt that involves this surface can occur immediately, and returns DD_OK if the bitblt can be completed.
 
 	IS_ISBLTDONE
-    Inquires whether the bitblt is done, and returns DD_OK if the last bitblt on this surface has completed.
+	Inquires whether the bitblt is done, and returns DD_OK if the last bitblt on this surface has completed.
 	*/
 
 	return DDERR_GENERIC;
 
 	/*
 	If it fails, the method returns DDERR_WASSTILLDRAWING if the bitbltter is busy, DDERR_NOBLTHW if there is no bitbltter, or one of the following error values:
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOBLTHW
-    DDERR_SURFACEBUSY
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
-    DDERR_WASSTILLDRAWING
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOBLTHW
+	DDERR_SURFACEBUSY
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -498,9 +498,9 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetClipper(LPDIRECTDRAWCLIPPER FAR 
 
 	return DDERR_GENERIC;
 	/*	
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOCLIPPERATTACHED
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOCLIPPERATTACHED
 	*/
 }
 
@@ -531,27 +531,27 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetColorKey(DWORD dwFlags, LPDDCOLO
 
 	/*
 	DDCKEY_DESTBLT
-    A color key or color space to be used as a destination color key for bit block transfer (bitblt) operations.
+	A color key or color space to be used as a destination color key for bit block transfer (bitblt) operations.
 
 	DDCKEY_DESTOVERLAY
-    A color key or color space to be used as a destination color key for overlay operations.
+	A color key or color space to be used as a destination color key for overlay operations.
 
 	DDCKEY_SRCBLT
-    A color key or color space to be used as a source color key for bitblt operations.
+	A color key or color space to be used as a source color key for bitblt operations.
 
 	DDCKEY_SRCOVERLAY
-    A color key or color space to be used as a source color key for overlay operations.
+	A color key or color space to be used as a source color key for overlay operations.
 	*/
 
 	return DD_OK;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOCOLORKEY
-    DDERR_NOCOLORKEYHW
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOCOLORKEY
+	DDERR_NOCOLORKEYHW
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
 	*/
 }
 
@@ -569,14 +569,14 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetDC(HDC FAR *lphDC)
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_DCALREADYCREATED
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDSURFACETYPE
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
-    DDERR_WASSTILLDRAWING
+	DDERR_DCALREADYCREATED
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDSURFACETYPE
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -588,23 +588,23 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetFlipStatus(DWORD dwFlags)
 
 	/*
 	DDGFS_CANFLIP
-    Inquires whether this surface can be flipped immediately, and returns DD_OK if the flip can be completed.
+	Inquires whether this surface can be flipped immediately, and returns DD_OK if the flip can be completed.
 
 	DDGFS_ISFLIPDONE
-    Inquires whether the flip has finished, and returns DD_OK if the last flip on this surface has completed.
+	Inquires whether the flip has finished, and returns DD_OK if the last flip on this surface has completed.
 	*/
 
 	return DDERR_GENERIC;
 
 	/*
 	If it fails, the method can return DDERR_WASSTILLDRAWING if the surface has not finished its flipping process, or one of the following error values:
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDSURFACETYPE
-    DDERR_SURFACEBUSY
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
-    DDERR_WASSTILLDRAWING
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDSURFACETYPE
+	DDERR_SURFACEBUSY
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -624,14 +624,14 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetOverlayPosition(LPLONG lplX, LPL
 	return DD_OK;
 
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDPOSITION
-    DDERR_NOOVERLAYDEST
-    DDERR_NOTAOVERLAYSURFACE
-    DDERR_OVERLAYNOTVISIBLE
-    DDERR_SURFACELOST
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDPOSITION
+	DDERR_NOOVERLAYDEST
+	DDERR_NOTAOVERLAYSURFACE
+	DDERR_OVERLAYNOTVISIBLE
+	DDERR_SURFACELOST
 	*/
 }
 
@@ -658,13 +658,13 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetPalette(LPDIRECTDRAWPALETTE FAR 
 	return DD_OK;
 
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOEXCLUSIVEMODE
-    DDERR_NOPALETTEATTACHED
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOEXCLUSIVEMODE
+	DDERR_NOPALETTEATTACHED
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
 	*/	
 }
 
@@ -677,7 +677,7 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetPixelFormat(LPDDPIXELFORMAT lpDD
 	if(lpDDPixelFormat == NULL) return DDERR_INVALIDPARAMS;
 
 	// lpDDPixelFormat receives a detailed description of the current pixel and 
-    // color space format of this surface.
+	// color space format of this surface.
 
 	// Copy pixel format to lpDDPixelFormat
 	memcpy(lpDDPixelFormat, &surfaceDesc.ddpfPixelFormat, sizeof(DDPIXELFORMAT));
@@ -685,9 +685,9 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetPixelFormat(LPDDPIXELFORMAT lpDD
 	return DD_OK;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDSURFACETYPE
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDSURFACETYPE
 	*/
 }
 
@@ -707,8 +707,8 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetSurfaceDesc(LPDDSURFACEDESC lpDD
 	return DD_OK;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -718,7 +718,7 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::Initialize(LPDIRECTDRAW lpDD, LPDDS
 	debugMessage(1, "IDirectDrawSurfaceWrapper::Initialize", "Partially Implemented");
 
 	// Because the DirectDrawSurface object is initialized when it is created, 
-    // this method always returns DDERR_ALREADYINITIALIZED.
+	// this method always returns DDERR_ALREADYINITIALIZED.
 	return DDERR_ALREADYINITIALIZED;
 }
 
@@ -729,8 +729,8 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::IsLost()
 	// debugMessage(2, "IDirectDrawSurfaceWrapper::IsLost", "Partially Implemented(Not Required)");
 
 	// You can use this method to determine when you need to reallocate surface memory. 
-    // When a DirectDrawSurface object loses its surface memory, most methods return 
-    // DDERR_SURFACELOST and perform no other action.
+	// When a DirectDrawSurface object loses its surface memory, most methods return 
+	// DDERR_SURFACELOST and perform no other action.
 
 	// Check if surface is lost or not, if not return OK
 
@@ -738,9 +738,9 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::IsLost()
 	return DD_OK;
 
 	/*	
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_SURFACELOST
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_SURFACELOST
 	*/
 }
 
@@ -750,9 +750,9 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::Lock(LPRECT lpDestRect, LPDDSURFACE
 	// lpDDSurfaceDesc cannot be null
 	if(lpDDSurfaceDesc == NULL) return DDERR_INVALIDPARAMS;
 
-	char message[2048] = "\0";
+	//char message[2048] = "\0";
 
-    // Check for destination rect
+	// Check for destination rect
 	//if(lpDestRect == NULL)
 	//{
 		// Copy desc to passed in desc
@@ -794,45 +794,45 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::Lock(LPRECT lpDestRect, LPDDSURFACE
 
 	/*
 	DDLOCK_DONOTWAIT
-    On IDirectDrawSurface7 interfaces, the default is DDLOCK_WAIT. If you want to override the default and use time when the accelerator is busy (as denoted by the DDERR_WASSTILLDRAWING return value), use DDLOCK_DONOTWAIT.
+	On IDirectDrawSurface7 interfaces, the default is DDLOCK_WAIT. If you want to override the default and use time when the accelerator is busy (as denoted by the DDERR_WASSTILLDRAWING return value), use DDLOCK_DONOTWAIT.
 
 	DDLOCK_EVENT
-    Not currently implemented.
+	Not currently implemented.
 
 	DDLOCK_NOOVERWRITE
-    New for DirectX 7.0. Used only with Direct3D vertex-buffer locks. Indicates that no vertices that were referred to in a draw operation since the start of the frame (or the last lock without this flag) are modified during the lock. This can be useful when you want only to append data to the vertex buffer.
+	New for DirectX 7.0. Used only with Direct3D vertex-buffer locks. Indicates that no vertices that were referred to in a draw operation since the start of the frame (or the last lock without this flag) are modified during the lock. This can be useful when you want only to append data to the vertex buffer.
 
 	DDLOCK_NOSYSLOCK
-    Do not take the Win16Mutex (also known as Win16Lock). This flag is ignored when locking the primary surface.
+	Do not take the Win16Mutex (also known as Win16Lock). This flag is ignored when locking the primary surface.
 
 	DDLOCK_DISCARDCONTENTS
-    New for DirectX 7.0. Used only with Direct3D vertex-buffer locks. Indicates that no assumptions are made about the contents of the vertex buffer during this lock. This enables Direct3D or the driver to provide an alternative memory area as the vertex buffer. This is useful when you plan to clear the contents of the vertex buffer and fill in new data.
+	New for DirectX 7.0. Used only with Direct3D vertex-buffer locks. Indicates that no assumptions are made about the contents of the vertex buffer during this lock. This enables Direct3D or the driver to provide an alternative memory area as the vertex buffer. This is useful when you plan to clear the contents of the vertex buffer and fill in new data.
 
 	DDLOCK_OKTOSWAP
-    This flag is obsolete and was replaced by the DDLOCK_DISCARDCONTENTS flag.
+	This flag is obsolete and was replaced by the DDLOCK_DISCARDCONTENTS flag.
 
 	DDLOCK_READONLY
-    Indicates that the surface being locked can only be read.
+	Indicates that the surface being locked can only be read.
 
 	DDLOCK_SURFACEMEMORYPTR
-    Indicates that a valid memory pointer to the top of the specified rectangle should be returned. If no rectangle is specified, a pointer to the top of the surface is returned. This is the default.
+	Indicates that a valid memory pointer to the top of the specified rectangle should be returned. If no rectangle is specified, a pointer to the top of the surface is returned. This is the default.
 
 	DDLOCK_WAIT
-    If a lock cannot be obtained because a bit block transfer (bitblt) operation is in progress, Lock retries until a lock is obtained or another error occurs, such as DDERR_SURFACEBUSY.
+	If a lock cannot be obtained because a bit block transfer (bitblt) operation is in progress, Lock retries until a lock is obtained or another error occurs, such as DDERR_SURFACEBUSY.
 
 	DDLOCK_WRITEONLY
-    Indicates that the surface being locked is write-enabled.
+	Indicates that the surface being locked is write-enabled.
 	*/
 
 	return DD_OK;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_OUTOFMEMORY
-    DDERR_SURFACEBUSY
-    DDERR_SURFACELOST
-    DDERR_WASSTILLDRAWING
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_OUTOFMEMORY
+	DDERR_SURFACEBUSY
+	DDERR_SURFACELOST
+	DDERR_WASSTILLDRAWING
 	*/
 }
 
@@ -844,16 +844,16 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::ReleaseDC(HDC hDC)
 	debugMessage(0, "IDirectDrawSurfaceWrapper::ReleaseDC", "Not Implemented");
 
 	// Free hDc which is the handle of a device context that was previously obtained
-    // by IDirectDrawSurface7::GetDC.
+	// by IDirectDrawSurface7::GetDC.
 
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
 	*/
 }
 
@@ -878,15 +878,15 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::Restore()
 
 	return DDERR_GENERIC;
 	/*
-    DDERR_GENERIC
-    DDERR_IMPLICITLYCREATED
-    DDERR_INCOMPATIBLEPRIMARY
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOEXCLUSIVEMODE
-    DDERR_OUTOFMEMORY
-    DDERR_UNSUPPORTED
-    DDERR_WRONGMODE
+	DDERR_GENERIC
+	DDERR_IMPLICITLYCREATED
+	DDERR_INCOMPATIBLEPRIMARY
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOEXCLUSIVEMODE
+	DDERR_OUTOFMEMORY
+	DDERR_UNSUPPORTED
+	DDERR_WRONGMODE
 	*/
 }
 
@@ -926,10 +926,10 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::SetClipper(LPDIRECTDRAWCLIPPER lpDD
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDSURFACETYPE
-    DDERR_NOCLIPPERATTACHED
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDSURFACETYPE
+	DDERR_NOCLIPPERATTACHED
 	*/
 }
 
@@ -944,7 +944,7 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::SetColorKey(DWORD dwFlags, LPDDCOLO
 
 	/*
 	DDCKEY_COLORSPACE
-    The structure contains a color space. Not set if the structure contains a single color key.
+	The structure contains a color space. Not set if the structure contains a single color key.
 	*/
 
 	//store color key information for the appropriate color key
@@ -1006,7 +1006,7 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::SetOverlayPosition(LONG lX, LONG lY
 HRESULT __stdcall IDirectDrawSurfaceWrapper::SetPalette(LPDIRECTDRAWPALETTE lpDDPalette)
 {
 	char message[2048] = "\0";
-	sprintf_s(message, 2048, "lpDDPalette: 0x%x", lpDDPalette);
+	sprintf_s(message, 2048, "lpDDPalette: %p", lpDDPalette);
 	debugMessage(2, "IDirectDrawSurfaceWrapper::SetPalette", message);
 
 	// if lpDDPalette is NULL then detach the current palette
@@ -1019,32 +1019,32 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::SetPalette(LPDIRECTDRAWPALETTE lpDD
 	}
 	
 	// When you call SetPalette to set a palette to a surface for the first time, 
-    // SetPalette increments the palette's reference count; subsequent calls to 
-    // SetPalette do not affect the palette's reference count.
+	// SetPalette increments the palette's reference count; subsequent calls to 
+	// SetPalette do not affect the palette's reference count.
 
 	attachedPalette = (IDirectDrawPaletteWrapper *)lpDDPalette;
 
 	return DD_OK;
 
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDPIXELFORMAT
-    DDERR_INVALIDSURFACETYPE
-    DDERR_NOEXCLUSIVEMODE
-    DDERR_NOPALETTEATTACHED
-    DDERR_NOPALETTEHW
-    DDERR_NOT8BITCOLOR
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDPIXELFORMAT
+	DDERR_INVALIDSURFACETYPE
+	DDERR_NOEXCLUSIVEMODE
+	DDERR_NOPALETTEATTACHED
+	DDERR_NOPALETTEHW
+	DDERR_NOT8BITCOLOR
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
 	*/
 }
 
 // Notifies DirectDraw that the direct surface manipulations are complete.
 HRESULT __stdcall IDirectDrawSurfaceWrapper::Unlock(LPVOID lpRect)
 {
-	char message[2048] = "\0";
+	//char message[2048] = "\0";
 
 	// NOTE: Disabled for performance
 	/*if(lpRect != 0)
@@ -1088,12 +1088,12 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::Unlock(LPVOID lpRect)
 	return DD_OK;
 
 	/*
-    DDERR_GENERIC
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDRECT
-    DDERR_NOTLOCKED
-    DDERR_SURFACELOST
+	DDERR_GENERIC
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDRECT
+	DDERR_NOTLOCKED
+	DDERR_SURFACELOST
 	*/
 }
 
@@ -1106,69 +1106,69 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::UpdateOverlay(LPRECT lpSrcRect, LPD
 
 	/*
 	lpSrcRect [in]
-    A pointer to a RECT structure that defines the x, y, width, and height of the region on the source surface being used as the overlay. This parameter can be NULL to hide an overlay or to indicate that the entire overlay surface is to be used and that the overlay surface conforms to any boundary and size-alignment restrictions imposed by the device driver.
+	A pointer to a RECT structure that defines the x, y, width, and height of the region on the source surface being used as the overlay. This parameter can be NULL to hide an overlay or to indicate that the entire overlay surface is to be used and that the overlay surface conforms to any boundary and size-alignment restrictions imposed by the device driver.
 
 	lpDDDestSurface [in]
-    A pointer to the IDirectDrawSurface7 interface for the DirectDrawSurface object that is being overlaid.
+	A pointer to the IDirectDrawSurface7 interface for the DirectDrawSurface object that is being overlaid.
 
 	lpDestRect [in]
-    A pointer to a RECT structure that defines the width, x, and height, y, of the region on the destination surface that the overlay should be moved to. This parameter can be NULL to hide the overlay.
+	A pointer to a RECT structure that defines the width, x, and height, y, of the region on the destination surface that the overlay should be moved to. This parameter can be NULL to hide the overlay.
 
 	dwFlags [in]
-    A combination of the following flags that determine the overlay update:
+	A combination of the following flags that determine the overlay update:
 
-    DDOVER_ADDDIRTYRECT
-        Adds a dirty rectangle to an emulated overlay surface.
-    DDOVER_ALPHADEST
-        Obsolete.
-    DDOVER_ALPHADESTCONSTOVERRIDE
-        Uses the dwAlphaDestConst member of the DDOVERLAYFX structure as the destination alpha channel for this overlay.
-    DDOVER_ALPHADESTNEG
-        Indicates that the destination surface becomes more transparent as the alpha value increases (0 is opaque).
-    DDOVER_ALPHADESTSURFACEOVERRIDE
-        Uses the lpDDSAlphaDest member of the DDOVERLAYFX structure as the alpha channel destination for this overlay.
-    DDOVER_ALPHAEDGEBLEND
-        Uses the dwAlphaEdgeBlend member of the DDOVERLAYFX structure as the alpha channel for the edges of the image that border the color key colors.
-    DDOVER_ALPHASRC
-        Uses either the alpha information in pixel format or the alpha channel surface attached to the source surface as the source alpha channel for this overlay.
-    DDOVER_ALPHASRCCONSTOVERRIDE
-        Uses the dwAlphaSrcConst member of the DDOVERLAYFX structure as the source alpha channel for this overlay.
-    DDOVER_ALPHASRCNEG
-        Indicates that the source surface becomes more transparent as the alpha value increases (0 is opaque).
-    DDOVER_ALPHASRCSURFACEOVERRIDE
-        Uses the lpDDSAlphaSrc member of the DDOVERLAYFX structure as the alpha channel source for this overlay.
-    DDOVER_ARGBSCALEFACTORS
-        New for DirectX 7.0. Indicates that the DDOVERLAYFX structure contains valid ARGB scaling factors.
-    DDOVER_AUTOFLIP
-        Automatically flips to the next surface in the flipping chain each time that a video port VSYNC occurs.
-    DDOVER_BOB
-        Displays each field of the interlaced video stream individually without causing any artifacts to display.
-    DDOVER_BOBHARDWARE
-        Bob operations are performed by using hardware, rather than by using software or being emulated. This flag must be used with the DDOVER_BOB flag.
-    DDOVER_DDFX
-        Uses the overlay FX flags in the lpDDOverlayFx parameter to define special overlay effects.
-    DDOVER_DEGRADEARGBSCALING
-        New for DirectX 7.0. ARGB scaling factors can be degraded to fit driver capabilities.
-    DDOVER_HIDE
-        Turns off this overlay.
-    DDOVER_INTERLEAVED
-        The surface memory is composed of interleaved fields.
-    DDOVER_KEYDEST
-        Uses the color key associated with the destination surface.
-    DDOVER_KEYDESTOVERRIDE
-        Uses the dckDestColorkey member of the DDOVERLAYFX structure as the color key for the destination surface.
-    DDOVER_KEYSRC
-        Uses the color key associated with the source surface.
-    DDOVER_KEYSRCOVERRIDE
-        Uses the dckSrcColorkey member of the DDOVERLAYFX structure as the color key for the source surface.
-    DDOVER_OVERRIDEBOBWEAVE
-        Bob and weave decisions should not be overridden by other interfaces.
-    DDOVER_REFRESHALL
-        Redraws the entire surface on an emulated overlayed surface.
-    DDOVER_REFRESHDIRTYRECTS
-        Redraws all dirty rectangles on an emulated overlayed surface.
-    DDOVER_SHOW
-        Turns on this overlay.
+	DDOVER_ADDDIRTYRECT
+		Adds a dirty rectangle to an emulated overlay surface.
+	DDOVER_ALPHADEST
+		Obsolete.
+	DDOVER_ALPHADESTCONSTOVERRIDE
+		Uses the dwAlphaDestConst member of the DDOVERLAYFX structure as the destination alpha channel for this overlay.
+	DDOVER_ALPHADESTNEG
+		Indicates that the destination surface becomes more transparent as the alpha value increases (0 is opaque).
+	DDOVER_ALPHADESTSURFACEOVERRIDE
+		Uses the lpDDSAlphaDest member of the DDOVERLAYFX structure as the alpha channel destination for this overlay.
+	DDOVER_ALPHAEDGEBLEND
+		Uses the dwAlphaEdgeBlend member of the DDOVERLAYFX structure as the alpha channel for the edges of the image that border the color key colors.
+	DDOVER_ALPHASRC
+		Uses either the alpha information in pixel format or the alpha channel surface attached to the source surface as the source alpha channel for this overlay.
+	DDOVER_ALPHASRCCONSTOVERRIDE
+		Uses the dwAlphaSrcConst member of the DDOVERLAYFX structure as the source alpha channel for this overlay.
+	DDOVER_ALPHASRCNEG
+		Indicates that the source surface becomes more transparent as the alpha value increases (0 is opaque).
+	DDOVER_ALPHASRCSURFACEOVERRIDE
+		Uses the lpDDSAlphaSrc member of the DDOVERLAYFX structure as the alpha channel source for this overlay.
+	DDOVER_ARGBSCALEFACTORS
+		New for DirectX 7.0. Indicates that the DDOVERLAYFX structure contains valid ARGB scaling factors.
+	DDOVER_AUTOFLIP
+		Automatically flips to the next surface in the flipping chain each time that a video port VSYNC occurs.
+	DDOVER_BOB
+		Displays each field of the interlaced video stream individually without causing any artifacts to display.
+	DDOVER_BOBHARDWARE
+		Bob operations are performed by using hardware, rather than by using software or being emulated. This flag must be used with the DDOVER_BOB flag.
+	DDOVER_DDFX
+		Uses the overlay FX flags in the lpDDOverlayFx parameter to define special overlay effects.
+	DDOVER_DEGRADEARGBSCALING
+		New for DirectX 7.0. ARGB scaling factors can be degraded to fit driver capabilities.
+	DDOVER_HIDE
+		Turns off this overlay.
+	DDOVER_INTERLEAVED
+		The surface memory is composed of interleaved fields.
+	DDOVER_KEYDEST
+		Uses the color key associated with the destination surface.
+	DDOVER_KEYDESTOVERRIDE
+		Uses the dckDestColorkey member of the DDOVERLAYFX structure as the color key for the destination surface.
+	DDOVER_KEYSRC
+		Uses the color key associated with the source surface.
+	DDOVER_KEYSRCOVERRIDE
+		Uses the dckSrcColorkey member of the DDOVERLAYFX structure as the color key for the source surface.
+	DDOVER_OVERRIDEBOBWEAVE
+		Bob and weave decisions should not be overridden by other interfaces.
+	DDOVER_REFRESHALL
+		Redraws the entire surface on an emulated overlayed surface.
+	DDOVER_REFRESHDIRTYRECTS
+		Redraws all dirty rectangles on an emulated overlayed surface.
+	DDOVER_SHOW
+		Turns on this overlay.
 
 	lpDDOverlayFx [in]
 		A pointer to the DDOVERLAYFX structure that describes the effects to be used. Can be NULL if the DDOVER_DDFX flag is not specified.
@@ -1177,19 +1177,19 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::UpdateOverlay(LPRECT lpSrcRect, LPD
 	return DDERR_GENERIC;
 	
 	/*
-    DDERR_DEVICEDOESNTOWNSURFACE
-    DDERR_GENERIC
-    DDERR_HEIGHTALIGN
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDRECT
-    DDERR_INVALIDSURFACETYPE
-    DDERR_NOSTRETCHHW
-    DDERR_NOTAOVERLAYSURFACE
-    DDERR_OUTOFCAPS
-    DDERR_SURFACELOST
-    DDERR_UNSUPPORTED
-    DDERR_XALIGN
+	DDERR_DEVICEDOESNTOWNSURFACE
+	DDERR_GENERIC
+	DDERR_HEIGHTALIGN
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDRECT
+	DDERR_INVALIDSURFACETYPE
+	DDERR_NOSTRETCHHW
+	DDERR_NOTAOVERLAYSURFACE
+	DDERR_OUTOFCAPS
+	DDERR_SURFACELOST
+	DDERR_UNSUPPORTED
+	DDERR_XALIGN
 	*/
 }
 
@@ -1208,34 +1208,34 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::UpdateOverlayZOrder(DWORD dwFlags, 
 
 	/*
 	DDOVERZ_INSERTINBACKOF
-    Inserts this overlay in the overlay chain behind the reference overlay.
+	Inserts this overlay in the overlay chain behind the reference overlay.
 
 	DDOVERZ_INSERTINFRONTOF
-    Inserts this overlay in the overlay chain in front of the reference overlay.
+	Inserts this overlay in the overlay chain in front of the reference overlay.
 
 	DDOVERZ_MOVEBACKWARD
-    Moves this overlay one position backward in the overlay chain.
+	Moves this overlay one position backward in the overlay chain.
 
 	DDOVERZ_MOVEFORWARD
-    Moves this overlay one position forward in the overlay chain.
+	Moves this overlay one position forward in the overlay chain.
 
 	DDOVERZ_SENDTOBACK
-    Moves this overlay to the back of the overlay chain.
+	Moves this overlay to the back of the overlay chain.
 
 	DDOVERZ_SENDTOFRONT
-    Moves this overlay to the front of the overlay chain.
+	Moves this overlay to the front of the overlay chain.
 
 	lpDDSReference [in]
-    A pointer to the IDirectDrawSurface7 interface for the DirectDraw surface to be used as a relative position in the 
+	A pointer to the IDirectDrawSurface7 interface for the DirectDraw surface to be used as a relative position in the 
 	overlay chain. This parameter is needed only for the DDOVERZ_INSERTINBACKOF and DDOVERZ_INSERTINFRONTOF flags.
 
 	*/
 
 	return DDERR_GENERIC;
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOTAOVERLAYSURFACE
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOTAOVERLAYSURFACE
 	*/
 }
 
@@ -1274,10 +1274,10 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::PageLock(DWORD dwFlags)
 
 	return DDERR_GENERIC;
 	/*
-    DDERR_CANTPAGELOCK
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_SURFACELOST
+	DDERR_CANTPAGELOCK
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_SURFACELOST
 	*/
 }
 
@@ -1292,11 +1292,11 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::PageUnlock(DWORD dwFlags)
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_CANTPAGEUNLOCK
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOTPAGELOCKED
-    DDERR_SURFACELOST
+	DDERR_CANTPAGEUNLOCK
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOTPAGELOCKED
+	DDERR_SURFACELOST
 	*/
 }
 
@@ -1311,24 +1311,24 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::SetSurfaceDesc(LPDDSURFACEDESC2 lpD
 
 	/*
 	lpDDsd2 [in]
-    A pointer to a DDSURFACEDESC2 structure that contains the new surface characteristics.
+	A pointer to a DDSURFACEDESC2 structure that contains the new surface characteristics.
 
 	dwFlags [in]
-    Currently not used and must be set to 0.
+	Currently not used and must be set to 0.
 	*/
 
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDPARAMS
-    DDERR_INVALIDOBJECT
-    DDERR_SURFACELOST
-    DDERR_SURFACEBUSY
-    DDERR_INVALIDSURFACETYPE
-    DDERR_INVALIDPIXELFORMAT
-    DDERR_INVALIDCAPS
-    DDERR_UNSUPPORTED
-    DDERR_GENERIC
+	DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_SURFACELOST
+	DDERR_SURFACEBUSY
+	DDERR_INVALIDSURFACETYPE
+	DDERR_INVALIDPIXELFORMAT
+	DDERR_INVALIDCAPS
+	DDERR_UNSUPPORTED
+	DDERR_GENERIC
 	*/
 }
 
@@ -1346,9 +1346,9 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::ChangeUniquenessValue()
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_EXCEPTION
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_EXCEPTION
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -1366,9 +1366,9 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::FreePrivateData(REFGUID guidTag)
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_NOTFOUND
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_NOTFOUND
 	*/
 }
 
@@ -1389,12 +1389,12 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetPrivateData(REFGUID guidTag, LPV
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_EXPIRED
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_MOREDATA
-    DDERR_NOTFOUND
-    DDERR_OUTOFMEMORY
+	DDERR_EXPIRED
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_MOREDATA
+	DDERR_NOTFOUND
+	DDERR_OUTOFMEMORY
 	*/
 }
 
@@ -1411,8 +1411,8 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetUniquenessValue(LPDWORD lpValue)
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -1441,9 +1441,9 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::SetPrivateData(REFGUID guidTag, LPV
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
-    DDERR_OUTOFMEMORY
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
+	DDERR_OUTOFMEMORY
 	*/
 }
 
@@ -1466,7 +1466,7 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::SetPriority(DWORD dwPriority)
 
 	/*
 	If it fails, the return value is an error. The method returns DDERR_INVALIDOBJECT 
-    if the parameter is invalid or if the texture is not managed by Direct3D. 
+	if the parameter is invalid or if the texture is not managed by Direct3D. 
 	*/
 
 }
@@ -1486,7 +1486,7 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetPriority(LPDWORD lpdwPriority)
 
 	/*
 	If it fails, the return value is an error. The method returns DDERR_INVALIDOBJECT
-    if the parameter is invalid or if the texture is not managed by Direct3D. 
+	if the parameter is invalid or if the texture is not managed by Direct3D. 
 	*/
 }
 
@@ -1504,8 +1504,8 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::SetLOD(LPDWORD lpdwMaxLOD)
 	return DDERR_GENERIC;
 
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -1522,8 +1522,8 @@ HRESULT __stdcall IDirectDrawSurfaceWrapper::GetLOD(DWORD dwMaxLOD)
 
 	return DDERR_GENERIC;
 	/*
-    DDERR_INVALIDOBJECT
-    DDERR_INVALIDPARAMS
+	DDERR_INVALIDOBJECT
+	DDERR_INVALIDPARAMS
 	*/
 }
 
@@ -1565,7 +1565,7 @@ IDirectDrawSurfaceWrapper::~IDirectDrawSurfaceWrapper()
 		rgbVideoMem = NULL;
 	}
 
-    // Release reference
+	// Release reference
 	Release();
 
 	debugMessage(2, "IDirectDrawSurfaceWrapper::~IDirectDrawSurfaceWrapper", "Destroyed");
@@ -1670,23 +1670,25 @@ HRESULT IDirectDrawSurfaceWrapper::WrapperInitialize(LPDDSURFACEDESC lpDDSurface
 	// Copy surface description
 	memcpy(&surfaceDesc, lpDDSurfaceDesc, sizeof(DDSURFACEDESC));
 
-	char message[2048] = "\0";
-	sprintf_s(message, 2048, "Initialized displayModeWidth: %d, displayModeHeight: %d, displayWidth: %d, displayHeight: %d", displayModeWidth, displayModeHeight, displayWidth, displayHeight);
-	if(lpDDSurfaceDesc->dwFlags & DDSD_ALL) strcat_s(message, 2048, ", DDSD_ALL");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_ALPHABITDEPTH) strcat_s(message, 2048, ", DDSD_ALPHABITDEPTH");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_CAPS) strcat_s(message, 2048, ", DDSD_CAPS");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_CKDESTBLT) strcat_s(message, 2048, ", DDSD_CKDESTBLT");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_CKDESTOVERLAY) strcat_s(message, 2048, ", DDSD_CKDESTOVERLAY");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_HEIGHT) strcat_s(message, 2048, ", DDSD_HEIGHT");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_LINEARSIZE) strcat_s(message, 2048, ", DDSD_LINEARSIZE");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_LPSURFACE) strcat_s(message, 2048, ", DDSD_LPSURFACE");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_MIPMAPCOUNT) strcat_s(message, 2048, ", DDSD_MIPMAPCOUNT");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_PITCH) strcat_s(message, 2048, ", DDSD_PITCH");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_PIXELFORMAT) strcat_s(message, 2048, ", DDSD_PIXELFORMAT");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_REFRESHRATE) strcat_s(message, 2048, ", DDSD_REFRESHRATE");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_TEXTURESTAGE) strcat_s(message, 2048, ", DDSD_TEXTURESTAGE");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_WIDTH) strcat_s(message, 2048, ", DDSD_WIDTH");
-	if(lpDDSurfaceDesc->dwFlags & DDSD_ZBUFFERBITDEPTH) strcat_s(message, 2048, ", DDSD_ZBUFFERBITDEPTH");
+	char message[2048];
+	sprintf_s(message, 2048, "Initialized displayModeWidth: %d, displayModeHeight: %d, displayWidth: %d, displayHeight: %d%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+	displayModeWidth, displayModeHeight, displayWidth, displayHeight,
+#define FLAG2STR(flag) (lpDDSurfaceDesc->dwFlags & flag) ? ", " #flag : ""
+	FLAG2STR(DDSD_ALL),
+	FLAG2STR(DDSD_ALPHABITDEPTH),
+	FLAG2STR(DDSD_CAPS),
+	FLAG2STR(DDSD_CKDESTBLT),
+	FLAG2STR(DDSD_CKDESTOVERLAY),
+	FLAG2STR(DDSD_HEIGHT),
+	FLAG2STR(DDSD_LINEARSIZE),
+	FLAG2STR(DDSD_LPSURFACE),
+	FLAG2STR(DDSD_MIPMAPCOUNT),
+	FLAG2STR(DDSD_PITCH),
+	FLAG2STR(DDSD_PIXELFORMAT),
+	FLAG2STR(DDSD_REFRESHRATE),
+	FLAG2STR(DDSD_TEXTURESTAGE),
+	FLAG2STR(DDSD_WIDTH),
+	FLAG2STR(DDSD_ZBUFFERBITDEPTH));
 	debugMessage(2, "IDirectDrawSurfaceWrapper::WrapperInitialize", message);
 
 	return DD_OK;

@@ -1,3 +1,5 @@
+#pragma once
+
 #define VC_EXTRALEAN
 #include <Windows.h>
 #include <initguid.h>
@@ -6,19 +8,14 @@
 #include <stdio.h>
 #include <ddraw.h>
 
-#ifndef H_DDW
-#define H_DDW
-
 // Global function def
-void debugMessage(int, char*, char*);
+void debugMessage(int, const char*, const char*);
 
 // Forward class declarations
 class FAR IDirectDrawWrapper;
 class FAR IDirectDrawPaletteWrapper;
 class FAR IDirectDrawClipperWrapper;
 class FAR IDirectDrawSurfaceWrapper;
-class FAR IDirectDrawColorControlWrapper;
-class FAR IDirectDrawGammaControlWrapper;
 
 // Custom vertex format
 const DWORD D3DFVF_TLVERTEX = D3DFVF_XYZRHW | D3DFVF_TEX1;
@@ -47,22 +44,22 @@ public:
 	ULONG __stdcall Release();
 	/*** IDirectDraw methods ***/
 	HRESULT __stdcall Compact();
-    HRESULT __stdcall CreateClipper(DWORD dwFlags, LPDIRECTDRAWCLIPPER FAR *lplpDDClipper, IUnknown FAR *pUnkOuter);
+	HRESULT __stdcall CreateClipper(DWORD dwFlags, LPDIRECTDRAWCLIPPER FAR *lplpDDClipper, IUnknown FAR *pUnkOuter);
 	HRESULT __stdcall CreatePalette(DWORD dwFlags, LPPALETTEENTRY lpDDColorArray, LPDIRECTDRAWPALETTE FAR *lplpDDPalette, IUnknown FAR *pUnkOuter);
 	HRESULT __stdcall CreateSurface(LPDDSURFACEDESC lpDDSurfaceDes, LPDIRECTDRAWSURFACE FAR *lplpDDSurface, IUnknown FAR *pUnkOuter);
-    HRESULT __stdcall DuplicateSurface(LPDIRECTDRAWSURFACE lpDDSurface, LPDIRECTDRAWSURFACE FAR *lplpDupDDSurface);
-    HRESULT __stdcall EnumDisplayModes(DWORD dwFlags, LPDDSURFACEDESC lpDDSurfaceDesc, LPVOID lpContext, LPDDENUMMODESCALLBACK lpEnumModesCallback);
-    HRESULT __stdcall EnumSurfaces(DWORD dwFlags, LPDDSURFACEDESC lpDDSD, LPVOID lpContext, LPDDENUMSURFACESCALLBACK lpEnumSurfacesCallback);
+	HRESULT __stdcall DuplicateSurface(LPDIRECTDRAWSURFACE lpDDSurface, LPDIRECTDRAWSURFACE FAR *lplpDupDDSurface);
+	HRESULT __stdcall EnumDisplayModes(DWORD dwFlags, LPDDSURFACEDESC lpDDSurfaceDesc, LPVOID lpContext, LPDDENUMMODESCALLBACK lpEnumModesCallback);
+	HRESULT __stdcall EnumSurfaces(DWORD dwFlags, LPDDSURFACEDESC lpDDSD, LPVOID lpContext, LPDDENUMSURFACESCALLBACK lpEnumSurfacesCallback);
 	HRESULT __stdcall FlipToGDISurface();
 	HRESULT __stdcall GetCaps(LPDDCAPS lpDDDriverCaps, LPDDCAPS lpDDHELCaps);
 	HRESULT __stdcall GetDisplayMode(LPDDSURFACEDESC lpDDSurfaceDesc);
-    HRESULT __stdcall GetFourCCCodes(LPDWORD lpNumCodes, LPDWORD lpCodes);
-    HRESULT __stdcall GetGDISurface(LPDIRECTDRAWSURFACE FAR *lplpGDIDDSSurface);
-    HRESULT __stdcall GetMonitorFrequency(LPDWORD lpdwFrequency);
-    HRESULT __stdcall GetScanLine(LPDWORD lpdwScanLine);
-    HRESULT __stdcall GetVerticalBlankStatus(LPBOOL lpbIsInVB);
-    HRESULT __stdcall Initialize(GUID FAR *lpGUID);
-    HRESULT __stdcall RestoreDisplayMode();
+	HRESULT __stdcall GetFourCCCodes(LPDWORD lpNumCodes, LPDWORD lpCodes);
+	HRESULT __stdcall GetGDISurface(LPDIRECTDRAWSURFACE FAR *lplpGDIDDSSurface);
+	HRESULT __stdcall GetMonitorFrequency(LPDWORD lpdwFrequency);
+	HRESULT __stdcall GetScanLine(LPDWORD lpdwScanLine);
+	HRESULT __stdcall GetVerticalBlankStatus(LPBOOL lpbIsInVB);
+	HRESULT __stdcall Initialize(GUID FAR *lpGUID);
+	HRESULT __stdcall RestoreDisplayMode();
 	HRESULT __stdcall SetCooperativeLevel(HWND hWnd, DWORD dwFlags);
 	HRESULT __stdcall SetDisplayMode(DWORD dwWidth, DWORD dwHeight, DWORD dwBPP);
 	// HRESULT __stdcall SetDisplayMode(DWORD dwWidth, DWORD dwHeight, DWORD dwBPP, DWORD dwRefreshRate, DWORD dwFlags);
@@ -118,7 +115,6 @@ private:
 	bool CreateD3DDevice();
 	bool CreateSurfaceTexture();
 	bool ReinitDevice();
-	bool CheckD3DFailure(HRESULT hr, char *location, char *message);
 
 	IDirectDrawSurfaceWrapper *lpAttachedSurface;
 
@@ -138,7 +134,7 @@ private:
 	int menuLocations[5];
 	RECT menuSprites[18];
 
-    // Flags and settings
+	// Flags and settings
 	BOOL inMenu;
 	int curMenu;
 	int menuWindowedResolution;
@@ -249,39 +245,39 @@ public:
 	ULONG __stdcall Release();
 	/*** IDirectDrawSurface methods ***/
 	HRESULT __stdcall AddAttachedSurface(LPDIRECTDRAWSURFACE lpDDSurface);
-    HRESULT __stdcall AddOverlayDirtyRect(LPRECT lpRect);
-    HRESULT __stdcall Blt(LPRECT lpDestRect,LPDIRECTDRAWSURFACE lpDDSrcSurface, LPRECT lpSrcRect, DWORD dwFlags, LPDDBLTFX lpDDBltFx);
-    HRESULT __stdcall BltBatch(LPDDBLTBATCH lpDDBltBatch, DWORD dwCount, DWORD dwFlags);
-    HRESULT __stdcall BltFast(DWORD dwX, DWORD dwY, LPDIRECTDRAWSURFACE lpDDSrcSurface, LPRECT lpSrcRect, DWORD dwFlags);
-    HRESULT __stdcall DeleteAttachedSurface(DWORD dwFlags,LPDIRECTDRAWSURFACE lpDDSAttachedSurface);
-    HRESULT __stdcall EnumAttachedSurfaces(LPVOID lpContext, LPDDENUMSURFACESCALLBACK lpEnumSurfacesCallback);
-    HRESULT __stdcall EnumOverlayZOrders(DWORD dwFlags, LPVOID lpContext, LPDDENUMSURFACESCALLBACK lpfnCallback);
-    HRESULT __stdcall Flip(LPDIRECTDRAWSURFACE lpDDSurfaceTargetOverride, DWORD dwFlags);
-    HRESULT __stdcall GetAttachedSurface(LPDDSCAPS lpDDSCaps, LPDIRECTDRAWSURFACE FAR *lplpDDAttachedSurface);
-    HRESULT __stdcall GetBltStatus(DWORD dwFlags);
+	HRESULT __stdcall AddOverlayDirtyRect(LPRECT lpRect);
+	HRESULT __stdcall Blt(LPRECT lpDestRect,LPDIRECTDRAWSURFACE lpDDSrcSurface, LPRECT lpSrcRect, DWORD dwFlags, LPDDBLTFX lpDDBltFx);
+	HRESULT __stdcall BltBatch(LPDDBLTBATCH lpDDBltBatch, DWORD dwCount, DWORD dwFlags);
+	HRESULT __stdcall BltFast(DWORD dwX, DWORD dwY, LPDIRECTDRAWSURFACE lpDDSrcSurface, LPRECT lpSrcRect, DWORD dwFlags);
+	HRESULT __stdcall DeleteAttachedSurface(DWORD dwFlags,LPDIRECTDRAWSURFACE lpDDSAttachedSurface);
+	HRESULT __stdcall EnumAttachedSurfaces(LPVOID lpContext, LPDDENUMSURFACESCALLBACK lpEnumSurfacesCallback);
+	HRESULT __stdcall EnumOverlayZOrders(DWORD dwFlags, LPVOID lpContext, LPDDENUMSURFACESCALLBACK lpfnCallback);
+	HRESULT __stdcall Flip(LPDIRECTDRAWSURFACE lpDDSurfaceTargetOverride, DWORD dwFlags);
+	HRESULT __stdcall GetAttachedSurface(LPDDSCAPS lpDDSCaps, LPDIRECTDRAWSURFACE FAR *lplpDDAttachedSurface);
+	HRESULT __stdcall GetBltStatus(DWORD dwFlags);
 	HRESULT __stdcall GetCaps(LPDDSCAPS lpDDSCaps);
-    HRESULT __stdcall GetClipper(LPDIRECTDRAWCLIPPER FAR *lplpDDClipper);
-    HRESULT __stdcall GetColorKey(DWORD dwFlags, LPDDCOLORKEY lpDDColorKey);
-    HRESULT __stdcall GetDC(HDC FAR *lphDC);
-    HRESULT __stdcall GetFlipStatus(DWORD dwFlags);
-    HRESULT __stdcall GetOverlayPosition(LPLONG lplX, LPLONG lplY);
-    HRESULT __stdcall GetPalette(LPDIRECTDRAWPALETTE FAR *lplpDDPalette);
-    HRESULT __stdcall GetPixelFormat(LPDDPIXELFORMAT lpDDPixelFormat);
-    HRESULT __stdcall GetSurfaceDesc(LPDDSURFACEDESC lpDDSurfaceDesc);
-    HRESULT __stdcall Initialize(LPDIRECTDRAW lpDD, LPDDSURFACEDESC lpDDSurfaceDesc);
-    HRESULT __stdcall IsLost();
+	HRESULT __stdcall GetClipper(LPDIRECTDRAWCLIPPER FAR *lplpDDClipper);
+	HRESULT __stdcall GetColorKey(DWORD dwFlags, LPDDCOLORKEY lpDDColorKey);
+	HRESULT __stdcall GetDC(HDC FAR *lphDC);
+	HRESULT __stdcall GetFlipStatus(DWORD dwFlags);
+	HRESULT __stdcall GetOverlayPosition(LPLONG lplX, LPLONG lplY);
+	HRESULT __stdcall GetPalette(LPDIRECTDRAWPALETTE FAR *lplpDDPalette);
+	HRESULT __stdcall GetPixelFormat(LPDDPIXELFORMAT lpDDPixelFormat);
+	HRESULT __stdcall GetSurfaceDesc(LPDDSURFACEDESC lpDDSurfaceDesc);
+	HRESULT __stdcall Initialize(LPDIRECTDRAW lpDD, LPDDSURFACEDESC lpDDSurfaceDesc);
+	HRESULT __stdcall IsLost();
 	HRESULT __stdcall Lock(LPRECT lpDestRect, LPDDSURFACEDESC lpDDSurfaceDesc, DWORD dwFlags, HANDLE hEvent);
-    HRESULT __stdcall ReleaseDC(HDC hDC);
-    HRESULT __stdcall Restore();
-    HRESULT __stdcall SetClipper(LPDIRECTDRAWCLIPPER lpDDClipper);
-    HRESULT __stdcall SetColorKey(DWORD dwFlags, LPDDCOLORKEY lpDDColorKey);
-    HRESULT __stdcall SetOverlayPosition(LONG lX, LONG lY);
+	HRESULT __stdcall ReleaseDC(HDC hDC);
+	HRESULT __stdcall Restore();
+	HRESULT __stdcall SetClipper(LPDIRECTDRAWCLIPPER lpDDClipper);
+	HRESULT __stdcall SetColorKey(DWORD dwFlags, LPDDCOLORKEY lpDDColorKey);
+	HRESULT __stdcall SetOverlayPosition(LONG lX, LONG lY);
 	HRESULT __stdcall SetPalette(LPDIRECTDRAWPALETTE lpDDPalette);
 	HRESULT __stdcall Unlock(LPVOID lpRect);
 	HRESULT __stdcall Unlock(LPRECT lpRect);
-    HRESULT __stdcall UpdateOverlay(LPRECT lpSrcRect, LPDIRECTDRAWSURFACE lpDDDestSurface, LPRECT lpDestRect, DWORD dwFlags, LPDDOVERLAYFX lpDDOverlayFx);
-    HRESULT __stdcall UpdateOverlayDisplay(DWORD dwFlags);
-    HRESULT __stdcall UpdateOverlayZOrder(DWORD dwFlags, LPDIRECTDRAWSURFACE lpDDSReference);
+	HRESULT __stdcall UpdateOverlay(LPRECT lpSrcRect, LPDIRECTDRAWSURFACE lpDDDestSurface, LPRECT lpDestRect, DWORD dwFlags, LPDDOVERLAYFX lpDDOverlayFx);
+	HRESULT __stdcall UpdateOverlayDisplay(DWORD dwFlags);
+	HRESULT __stdcall UpdateOverlayZOrder(DWORD dwFlags, LPDIRECTDRAWSURFACE lpDDSReference);
 	/*** Added in the v2 interface ***/
 	HRESULT __stdcall GetDDInterface(LPVOID FAR *lplpDD);
 	HRESULT __stdcall PageLock(DWORD dwFlags);
@@ -289,16 +285,16 @@ public:
 	/*** Added in the v3 interface ***/
 	HRESULT __stdcall SetSurfaceDesc(LPDDSURFACEDESC2 lpDDsd2, DWORD dwFlags);
 	/*** Added in the v4 interface ***/
-    HRESULT __stdcall ChangeUniquenessValue();
-    HRESULT __stdcall FreePrivateData(REFGUID guidTag);
-    HRESULT __stdcall GetPrivateData(REFGUID guidTag, LPVOID lpBuffer, LPDWORD lpcbBufferSize);
-    HRESULT __stdcall GetUniquenessValue(LPDWORD lpValue);
+	HRESULT __stdcall ChangeUniquenessValue();
+	HRESULT __stdcall FreePrivateData(REFGUID guidTag);
+	HRESULT __stdcall GetPrivateData(REFGUID guidTag, LPVOID lpBuffer, LPDWORD lpcbBufferSize);
+	HRESULT __stdcall GetUniquenessValue(LPDWORD lpValue);
 	HRESULT __stdcall SetPrivateData(REFGUID guidTag, LPVOID lpData, DWORD cbSize, DWORD dwFlags);
 	/*** Texture7 methods ***/
-    HRESULT __stdcall SetPriority(DWORD dwPriority);
-    HRESULT __stdcall GetPriority(LPDWORD lpdwPriority);
-    HRESULT __stdcall SetLOD(LPDWORD lpdwMaxLOD);
-    HRESULT __stdcall GetLOD(DWORD dwMaxLOD);
+	HRESULT __stdcall SetPriority(DWORD dwPriority);
+	HRESULT __stdcall GetPriority(LPDWORD lpdwPriority);
+	HRESULT __stdcall SetLOD(LPDWORD lpdwMaxLOD);
+	HRESULT __stdcall GetLOD(DWORD dwMaxLOD);
 
 	// Constructor/destructor
 	IDirectDrawSurfaceWrapper(IDirectDrawWrapper* parent);
@@ -332,51 +328,3 @@ private:
 	// Virtual video memory
 	BYTE *rawVideoMem;
 };
-
-/*
- * IDirectDrawColorControl
- */
-class FAR IDirectDrawColorControlWrapper : public IDirectDrawColorControl
-{
-//implemented interfaces
-public:
-	/*** IUnknown methods ***/
-	HRESULT __stdcall QueryInterface(REFIID riid, LPVOID FAR * ppvObj);
-	ULONG __stdcall AddRef();
-	ULONG __stdcall Release();
-	/*** IDirectDrawColorControl methods ***/
-	HRESULT __stdcall GetColorControls(LPDDCOLORCONTROL lpColorControl);
-	HRESULT __stdcall SetColorControls(LPDDCOLORCONTROL lpColorControl);
-	
-	// Constructor/destructor
-	IDirectDrawColorControlWrapper();
-	~IDirectDrawColorControlWrapper();
-
-// Custom functions and variables
-private:
-};
-
-/*
- * IDirectDrawGammaControl
- */
-class FAR IDirectDrawGammaControlWrapper : public IDirectDrawGammaControl
-{
-// Implemented interfaces
-public:
-	/*** IUnknown methods ***/
-	HRESULT __stdcall QueryInterface(REFIID riid, LPVOID FAR * ppvObj);
-	ULONG __stdcall AddRef();
-	ULONG __stdcall Release();
-	/*** IDirectDrawGammaControl methods ***/
-	HRESULT __stdcall GetGammaRamp(DWORD dwFlags, LPDDGAMMARAMP lpRampData);
-	HRESULT __stdcall SetGammaRamp(DWORD dwFlags, LPDDGAMMARAMP lpRampData);
-	
-	// Constructor/destructor
-	IDirectDrawGammaControlWrapper();
-	~IDirectDrawGammaControlWrapper();
-
-// Custom functions and variables
-private:
-};
-
-#endif

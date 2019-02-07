@@ -73,7 +73,7 @@ HRESULT __stdcall IDirectDrawPaletteWrapper::GetCaps(LPDWORD lpdwCaps)
 
 // Retrieves palette values from a DirectDrawPalette object. 
 HRESULT __stdcall IDirectDrawPaletteWrapper::GetEntries(DWORD dwFlags, DWORD dwBase, DWORD dwNumEntries, LPPALETTEENTRY lpEntries)
-{    
+{
 	// lpEntries cannot be null and dwFlags must be 0
 	if(lpEntries == NULL) return DDERR_INVALIDPARAMS;
 
@@ -81,18 +81,18 @@ HRESULT __stdcall IDirectDrawPaletteWrapper::GetEntries(DWORD dwFlags, DWORD dwB
 	memcpy(lpEntries, &(rawPalette[dwBase]), sizeof(PALETTEENTRY) * min(dwNumEntries, entryCount - dwBase));
 
 	/* 
-    // NOTE: Debugging disabled for performance
-    debugMessage(2, "IDirectDrawPaletteWrapper::GetEntries", "Retrieved Palette Entries");
+	// NOTE: Debugging disabled for performance
+	debugMessage(2, "IDirectDrawPaletteWrapper::GetEntries", "Retrieved Palette Entries");
 
-    char message[2048] = "\0";
+	char message[2048] = "\0";
 	sprintf_s(message, 2048, "dwBase: %d, dwNumEntries: %d", dwBase, dwNumEntries);
 	debugMessage(2, "IDirectDrawPaletteWrapper::GetEntries", message);
-    */
-    
+	*/
+
 	// dwNumEntries is the number of palette entries that can fit in the array that lpEntries 
-    // specifies. The colors of the palette entries are returned in sequence, from the value
-    // of the dwStartingEntry parameter through the value of the dwCount parameter minus 1. 
-    // (These parameters are set by IDirectDrawPalette::SetEntries.) 
+	// specifies. The colors of the palette entries are returned in sequence, from the value
+	// of the dwStartingEntry parameter through the value of the dwCount parameter minus 1. 
+	// (These parameters are set by IDirectDrawPalette::SetEntries.) 
 
 	return DD_OK;
 }
@@ -138,8 +138,8 @@ HRESULT __stdcall IDirectDrawPaletteWrapper::SetEntries(DWORD dwFlags, DWORD dwS
 	}
 
 	/* 
-    // NOTE: Debugging disabled for performance
-    debugMessage(2, "IDirectDrawPaletteWrapper::SetEntries", "Set Palette Entries");
+	// NOTE: Debugging disabled for performance
+	debugMessage(2, "IDirectDrawPaletteWrapper::SetEntries", "Set Palette Entries");
 
 	char message[2048] = "\0";
 	sprintf_s(message, 2048, "dwStartingEntry: %d, dwCount: %d", dwStartingEntry, dwCount);
@@ -268,21 +268,22 @@ HRESULT IDirectDrawPaletteWrapper::WrapperInitialize(DWORD dwFlags, LPPALETTEENT
 		}
 	}
 
-	char message[2048] = "\0";
-	sprintf_s(message, 2048, "Initialized");
-	if(dwFlags & DDPCAPS_1BIT) strcat_s(message, 2048, ", DDPCAPS_1BIT");
-	if(dwFlags & DDPCAPS_2BIT) strcat_s(message, 2048, ", DDPCAPS_2BIT");
-	if(dwFlags & DDPCAPS_4BIT) strcat_s(message, 2048, ", DDPCAPS_4BIT");
-	if(dwFlags & DDPCAPS_8BIT) strcat_s(message, 2048, ", DDPCAPS_8BIT");
-	if(dwFlags & DDPCAPS_8BITENTRIES) strcat_s(message, 2048, ", DDPCAPS_8BITENTRIES");
-	if(dwFlags & DDPCAPS_ALPHA) strcat_s(message, 2048, ", DDPCAPS_ALPHA");
-	if(dwFlags & DDPCAPS_ALLOW256) strcat_s(message, 2048, ", DDPCAPS_ALLOW256");
-	if(dwFlags & DDPCAPS_INITIALIZE) strcat_s(message, 2048, ", DDPCAPS_INITIALIZE");
-	if(dwFlags & DDPCAPS_PRIMARYSURFACE) strcat_s(message, 2048, ", DDPCAPS_PRIMARYSURFACE");
-	if(dwFlags & DDPCAPS_PRIMARYSURFACELEFT) strcat_s(message, 2048, ", DDPCAPS_PRIMARYSURFACELEFT");
-	if(dwFlags & DDPCAPS_VSYNC) strcat_s(message, 2048, ", DDPCAPS_VSYNC");
+	char message[2048];
+	sprintf_s(message, 2048, "Initialized%s%s%s%s%s%s%s%s%s%s%s",
+#define FLAG2STR(flag) (dwFlags & flag) ? ", " #flag : ""
+	FLAG2STR(DDPCAPS_1BIT),
+	FLAG2STR(DDPCAPS_2BIT),
+	FLAG2STR(DDPCAPS_4BIT),
+	FLAG2STR(DDPCAPS_8BIT),
+	FLAG2STR(DDPCAPS_8BITENTRIES),
+	FLAG2STR(DDPCAPS_ALPHA),
+	FLAG2STR(DDPCAPS_ALLOW256),
+	FLAG2STR(DDPCAPS_INITIALIZE),
+	FLAG2STR(DDPCAPS_PRIMARYSURFACE),
+	FLAG2STR(DDPCAPS_PRIMARYSURFACELEFT),
+	FLAG2STR(DDPCAPS_VSYNC));
 	debugMessage(2, "IDirectDrawPaletteWrapper::WrapperInitialize", message);
 	
-    // Success
+	// Success
 	return DD_OK;
 }
