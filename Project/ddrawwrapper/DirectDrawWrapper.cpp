@@ -2096,34 +2096,50 @@ bool IDirectDrawWrapper::CreateSurfaceTexture()
 		return false;
 	}
 
+	// Calculate width and height with original aspect ratio
+	DWORD width = displayWidth;
+	DWORD height = displayHeight;
+	if (displayModeWidth * displayHeight < displayModeHeight * displayWidth)
+	{
+		// 4:3 displayed on 16:9
+		width = displayHeight * displayModeWidth / displayModeHeight;
+	}
+	else
+	{
+		// 16:9 displayed on 4:3
+		height = displayWidth * displayModeHeight / displayModeWidth;
+	}
+	const DWORD xpad = (displayWidth - width) / 2;
+	const DWORD ypad = (displayHeight - height) / 2;
+
 	// Set vertex points
 	// 0, 0
-	vertices[0].x = -0.5f;
-	vertices[0].y = -0.5f;
+	vertices[0].x = -0.5f + xpad;
+	vertices[0].y = -0.5f + ypad;
 	vertices[0].z = 0.0f;
 	vertices[0].rhw = 1.0f;
 	vertices[0].u = 0.0f;
 	vertices[0].v = 0.0f;
 
-	// currentWidth, 0
-	vertices[1].x = (float)displayWidth - 0.5f;
-	vertices[1].y = -0.5f;
+	// width, 0
+	vertices[1].x = -0.5f + xpad + width;
+	vertices[1].y = vertices[0].y;
 	vertices[1].z = 0.0f;
 	vertices[1].rhw = 1.0f;
 	vertices[1].u = 1.0f;
 	vertices[1].v = 0.0f;
 
-	// currentWidth, scaledHeight
-	vertices[2].x = (float) displayWidth - 0.5f;
-	vertices[2].y = (float) displayHeight - 0.5f;
+	// width, height
+	vertices[2].x = vertices[1].x;
+	vertices[2].y = -0.5f + ypad + height;
 	vertices[2].z = 0.0f;
 	vertices[2].rhw = 1.0f;
 	vertices[2].u = 1.0f;
 	vertices[2].v = 1.0f;
 
-	// 0, currentHeight
-	vertices[3].x = -0.5f;
-	vertices[3].y = (float) displayHeight - 0.5f;
+	// 0, height
+	vertices[3].x = vertices[0].x;
+	vertices[3].y = vertices[2].y;
 	vertices[3].z = 0.0f;
 	vertices[3].rhw = 1.0f;
 	vertices[3].u = 0.0f;
