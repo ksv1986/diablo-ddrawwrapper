@@ -98,6 +98,9 @@ public:
 	DWORD displayModeWidth;
 	DWORD displayModeHeight;
 
+	// Virtual video memory
+	BYTE* rawVideoMem;
+
 	// Display resolution
 	UINT displayWidth;
 	UINT displayHeight;
@@ -116,7 +119,7 @@ private:
 	bool CreateSurfaceTexture();
 	bool ReinitDevice();
 
-	IDirectDrawSurfaceWrapper *lpAttachedSurface;
+	IDirectDrawSurfaceWrapper *primarySurface;
 
 	// Reference count
 	ULONG ReferenceCount;
@@ -301,11 +304,10 @@ public:
 	~IDirectDrawSurfaceWrapper();
 
 	// Helper functions
-	HRESULT WrapperInitialize(LPDDSURFACEDESC lpDDSurfaceDesc, DWORD displayModeWidth, DWORD displayModeHeight, DWORD displayWidth, DWORD displayHeight);
-	BOOL ReInitialize(DWORD displayWidth, DWORD displayHeight);
+	HRESULT WrapperInitialize(LPDDSURFACEDESC lpDDSurfaceDesc);
 
-	// RGB video memory
-	UINT32 *rgbVideoMem;
+	// Associated palette
+	IDirectDrawPaletteWrapper* attachedPalette;
 
 //Custom functions and variables
 private:
@@ -313,18 +315,11 @@ private:
 	ULONG ReferenceCount;
 	// Directdraw object that created this surface
 	IDirectDrawWrapper *ddrawParent;
-	// Associated palette
-	IDirectDrawPaletteWrapper *attachedPalette;
-	
+
 	// Surface description
 	DDSURFACEDESC surfaceDesc;
-	LONG surfaceWidth;
-	LONG surfaceHeight;
 
 	// Color keys(DDCKEY_DESTBLT, DDCKEY_DESTOVERLAY, DDCKEY_SRCBLT, DDCKEY_SRCOVERLAY)
 	DDCOLORKEY colorKeys[4];
 	LONG overlayX, overlayY;
-
-	// Virtual video memory
-	BYTE *rawVideoMem;
 };

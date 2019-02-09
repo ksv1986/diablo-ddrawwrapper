@@ -9,7 +9,7 @@ const wchar_t filename[] = L".\\ddraw_settings.ini";
 
 // Retrieves pointers to the supported interfaces on an object.
 HRESULT __stdcall IDirectDrawWrapper::QueryInterface(REFIID riid, LPVOID FAR * ppvObj)
-{	
+{
 	debugMessage(1, "IDirectDrawWrapper::QueryInterface", "Partially Implemented");
 
 	// Provide the directdraw interface for all versions up to 7
@@ -152,17 +152,19 @@ HRESULT __stdcall IDirectDrawWrapper::CreateSurface(LPDDSURFACEDESC lpDDSurfaceD
 		CAPS2STR(DDSCAPS_WRITEONLY),
 		CAPS2STR(DDSCAPS_ZBUFFER));
 
+	if (!(dwCaps& DDSCAPS_PRIMARYSURFACE)) return DDERR_UNSUPPORTED;
+
 	// Create our surface wrapper and return success
-	lpAttachedSurface = new IDirectDrawSurfaceWrapper(this);
-	if(lpAttachedSurface == NULL) return DDERR_OUTOFMEMORY; //OOM Fail
+	primarySurface = new IDirectDrawSurfaceWrapper(this);
+	if(primarySurface == NULL) return DDERR_OUTOFMEMORY; //OOM Fail
 	// Initialize the surface wrapper
-	HRESULT hr = lpAttachedSurface->WrapperInitialize(lpDDSurfaceDesc, displayModeWidth, displayModeHeight, displayWidth, displayHeight);
+	HRESULT hr = primarySurface->WrapperInitialize(lpDDSurfaceDesc);
 	// If fail then return result
 	if(hr != DD_OK) return hr;
 
 	// Set the address to the new object
-	*lplpDDSurface = (LPDIRECTDRAWSURFACE)lpAttachedSurface;
-	
+	*lplpDDSurface = (LPDIRECTDRAWSURFACE)primarySurface;
+
 	debugMessage(2, "IDirectDrawWrapper::CreateSurface", message);
 
 	// If creation was successful
@@ -616,6 +618,10 @@ HRESULT __stdcall IDirectDrawWrapper::SetDisplayMode(DWORD dwWidth, DWORD dwHeig
 	displayModeWidth = dwWidth;
 	displayModeHeight = dwHeight;
 
+	delete[] rawVideoMem;
+	// Overallocate the memory to prevent access outside of memory range by the exe
+	rawVideoMem = new BYTE[4096 + displayModeWidth * displayModeHeight];
+
 	// Ignore color depth
 
 	// Init textures to new display mode
@@ -959,7 +965,8 @@ IDirectDrawWrapper::IDirectDrawWrapper()
 
 	ReferenceCount = 0;
 
-	lpAttachedSurface = NULL;
+	primarySurface = NULL;
+	rawVideoMem = NULL;
 
 	// Init objects
 	d3d9Object = NULL;
@@ -1299,7 +1306,7 @@ HRESULT IDirectDrawWrapper::Present()
 	}
 
 	// Make sure the attached surface exists
-	if(lpAttachedSurface != NULL)
+	if(primarySurface != NULL)
 	{
 		// Lock full dynamic texture
 		D3DLOCKED_RECT d3dlrect;
@@ -1309,10 +1316,16 @@ HRESULT IDirectDrawWrapper::Present()
 			return false;
 		}
 
+		const UINT32* rgbPalette = primarySurface->attachedPalette->rgbPalette;
 		// Copy bits to texture by scanline observing pitch
 		for(DWORD y = 0; y < displayModeHeight; y++)
 		{
-			memcpy((BYTE *)d3dlrect.pBits + (y * d3dlrect.Pitch), &lpAttachedSurface->rgbVideoMem[y * displayModeWidth], displayModeWidth * sizeof(UINT32));
+			UINT32* row = (UINT32*)((BYTE*)d3dlrect.pBits + (y * d3dlrect.Pitch));
+			for (DWORD x = 0; x < displayModeWidth; x++)
+			{
+				// Translate all of raw video memory to rgb video memory with palette
+				row[x] = rgbPalette[rawVideoMem[y * displayModeWidth + x]];
+			}
 		}
 
 		// Unlock dynamic texture
